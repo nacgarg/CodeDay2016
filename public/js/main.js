@@ -436,40 +436,49 @@ var host = function() {
             }
 
             /* Spawn enemies */
-            if (++counter % 500 - counter / 1000 == 0) {
-                var rand = Math.random();
-                var enemy = {
-                    angle: 0,
-                    target: { x: translate_x, y: translate_y }
+            var enemyFrequency = 500;
+            var numEnemies = 1;
+
+            for (var i = 0; i < numEnemies; i++) {
+
+                enemyFrequency /= 2;
+                numEnemies++;
+
+                if (++counter % enemyFrequency == 0) {
+                    var rand = Math.random();
+                    var enemy = {
+                        angle: 0,
+                        target: { x: translate_x, y: translate_y }
+                    }
+                    var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
+                    switch (edge) {
+                        case "up":
+                            enemy.x = Math.random() * translate_x * 2
+                            enemy.y = Math.random() * 10
+                        case "down":
+                            enemy.x = Math.random() * translate_x * 2
+                            enemy.y = translate_y * 2 - Math.random() * 10
+                        case "left":
+                            enemy.y = Math.random() * translate_y * 2
+                            enemy.x = Math.random() * 10
+                        case "right":
+                            enemy.y = Math.random() * translate_y * 2
+                            enemy.x = translate_x * 2 - Math.random() * 10
+                    }
+                    if (rand > 0.9) {
+                        enemy.type = "star"
+                    } else if (rand > 0.65) {
+                        enemy.type = "pentagon"
+                    } else if (rand > 0.4) {
+                        enemy.type = "circle"
+                    } else {
+                        enemy.type = "triangle"
+                    }
+                    enemy.health = enemyTypes[enemy.type].health;
+                    enemy.speed = enemyTypes[enemy.type].speed;
+                    game.enemies.push(enemy);
+                    console.log('made enemy', enemy);
                 }
-                var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
-                switch (edge) {
-                    case "up":
-                        enemy.x = Math.random() * translate_x * 2
-                        enemy.y = Math.random() * 10
-                    case "down":
-                        enemy.x = Math.random() * translate_x * 2
-                        enemy.y = translate_y * 2 - Math.random() * 10
-                    case "left":
-                        enemy.y = Math.random() * translate_y * 2
-                        enemy.x = Math.random() * 10
-                    case "right":
-                        enemy.y = Math.random() * translate_y * 2
-                        enemy.x = translate_x * 2 - Math.random() * 10
-                }
-                if (rand > 0.9) {
-                    enemy.type = "star"
-                } else if (rand > 0.65) {
-                    enemy.type = "pentagon"
-                } else if (rand > 0.4) {
-                    enemy.type = "circle"
-                } else {
-                    enemy.type = "triangle"
-                }
-                enemy.health = enemyTypes[enemy.type].health;
-                enemy.speed = enemyTypes[enemy.type].speed;
-                game.enemies.push(enemy);
-                console.log('made enemy', enemy);
             }
 
         }
