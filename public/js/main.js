@@ -207,7 +207,9 @@ var host = function() {
         }
     })
 
+    function drawTriangle(x,y,hp) {
 
+    }
     function draw() {
         console.log(translate_x, translate_y)
         if (canvas.getContext) {
