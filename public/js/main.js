@@ -201,8 +201,8 @@ var host = function() {
                 id: randomString(5),
                 speed: 3,
                 damage: 3,
-                x: Math.floor(Math.random() * 120) - 120 + translate_x,
-                y: Math.floor(Math.random() * 80) - 80 + translate_y
+                x: Math.floor(Math.random() * 320) - 160 + translate_x,
+                y: Math.floor(Math.random() * 200) - 100 + translate_y
             })
         }
     })
