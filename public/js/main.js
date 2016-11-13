@@ -433,7 +433,7 @@ var host = function() {
 
                     // check if bullet hit enemy, if so, decrease enemy health and reset bullet
 
-                    if (Math.sqrt(Math.pow(bullet.x - target.x, 2) + Math.pow(bullet.y - target.y, 2)) < 15) { //within 15 of enemy, so it probably hit it lol
+                    if (Math.sqrt(Math.pow(bullet.x - target.x, 2) + Math.pow(bullet.y - target.y, 2)) < target.size) { //within 15 of enemy, so it probably hit it lol
                         target.health -= turret.damage;
                         turret.ready = true;
                         if (target.health <= 0) { //ded
@@ -506,8 +506,9 @@ var host = function() {
                     } else {
                         enemy.type = "triangle"
                     }
-                    enemy.health = enemyTypes[enemy.type].health;
-                    enemy.speed = enemyTypes[enemy.type].speed;
+                    enemy.health = enemyTypes[enemy.type].health * (Math.ceil(counter/1000) + 1)/2;
+                    enemy.speed = enemyTypes[enemy.type].speed * (Math.ceil(counter/1000) + 1)/2;
+                    enemy.size = 15 * (Math.ceil(counter/1000) + 1)/2;
                     game.enemies.push(enemy);
                     console.log('made enemy', enemy);
                 }
