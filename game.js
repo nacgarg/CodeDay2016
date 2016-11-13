@@ -5,7 +5,8 @@ function randomString(length) {
 module.exports = {
     newGame: function() {
         var g = {
-        	players: []
+        	players: [],
+            playerConns: []
         };
         g.code = randomString(5)
         // initialize other game attributes here
