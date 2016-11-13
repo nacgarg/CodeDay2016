@@ -454,7 +454,7 @@ var host = function() {
 
                 // check if enemy is in castle, if so decrease health by its damage
                 if (enemy.x > translate_x - 160 && enemy.x < translate_x + 160 && enemy.y > translate_y - 100 && enemy.y < translate_y + 100) {
-                    game.health -= enemy.damage
+                    game.health -= enemyTypes[enemy.type].damage
                         // maybe enemy health goes down if it's in the castle?
                 }
             }
