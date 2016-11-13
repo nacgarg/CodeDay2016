@@ -415,7 +415,7 @@ var host = function() {
             }
 
             /* Spawn enemies */
-
+            console.log(t)
             if (t % 500 == 0) {
                 var rand = Math.random();
                 var enemy = {
