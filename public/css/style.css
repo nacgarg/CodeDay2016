@@ -86,3 +86,29 @@ a {
     position: absolute;
     bottom: 50px;
 }
+
+.counter {
+   background-color: #00B7FF;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0px 0px 50px gray;
+
+}
+
+.statusbar-elem {
+    display: inline-block;
+    margin: 10px;
+    margin-right: 25px;
+}
+
+#statusbar {
+    background-color: #2ecc71;
+    color: white;
+    font-size: 25px;
+    box-shadow: 0px 0px 60px black;
+    margin: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+}

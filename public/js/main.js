@@ -548,7 +548,7 @@ var host = function() {
             // Check if you are rip
 
             document.getElementById("score").innerHTML = "Score: " + game.score;
-            document.getElementById("health").innerHTML = "health: " + game.health;
+            document.getElementById("health").innerHTML = "Health: " + Math.round(game.health);
 
             if (game.health < 0) {
                 alert("Game over! You scored " + game.score)
