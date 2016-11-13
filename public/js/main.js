@@ -183,6 +183,12 @@ var host = function() {
 
     })
 
+    socket.on("newGesture", function(gesture) {
+        if (gesture.name == "triangle") {
+            
+        }
+    })
+
 
     function draw() {
         var canvas = document.getElementById('game-canvas');

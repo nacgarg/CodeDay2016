@@ -1,4 +1,5 @@
 var game = require('./game')
+var _ = require('lodash')
 
 module.exports = function(http) {
     var io = require('socket.io')(http)
@@ -13,32 +14,34 @@ module.exports = function(http) {
             var g = game.newGame();
             g.conn = socket
             game.games.push(g);
-            socket.emit("newGame" + msg, g);
+            socket.emit("newGame" + msg, _.omit(g, "conn"));
             console.log("Created new game, host is " + msg)
         });
         socket.on('joinGame', function(code) {
-            if (game.games.filter(function(g) {
+            if (!game.games.filter(function(g) {
                     return g.code === code.code
                 }).length < 1) {
-                return;
+
+
+                console.log(code, "wants to join game")
+                var g = game.games.filter(function(g) {
+                    return g.code === code.code
+                })[0]
+                g.players.push({ name: code.name, id: code.client })
+                socket.emit("joinGame" + code.client, _.omit(g, "conn"))
             }
-            console.log(code, "wants to join game")
-            var g = game.games.filter(function(g) {
-                return g.code === code.code
-            })[0]
-            g.players.push({ name: code.name, id: code.client })
-            socket.emit("joinGame" + code.client, g)
         });
         socket.on("gesture", function(msg) {
-            if (game.games.filter(function(g) {
+            if (!game.games.filter(function(g) {
                     return g.code === code.code
                 }).length < 1) {
                 return;
+
+                var g = game.games.filter(function(g) {
+                    return g.code === msg.code
+                })[0]
+                g.conn.emit("newGesture", msg)
             }
-            var g = game.games.filter(function(g) {
-                return g.code === msg.code
-            })[0]
-            g.conn.emit("newGesture", msg)
         })
     });
 
