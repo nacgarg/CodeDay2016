@@ -20,17 +20,23 @@ var start = function() {
         document.getElementById('shadow').style = "display: block; opacity: 0.5;"
     }
 }
+
 window.clientCode = randomString(9)
 
 var client = function() {
     document.getElementById('pregame').style = "display: none;"
     document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
-    document.getElementById('shadow').style = "display: block; opacity: 0;"
+    document.getElementById('shadow').style = "display: none; opacity: 0;"
+    document.getElementById('form').style = "display: block;opacity:1";
+}
+var actuallyClient = function() {
     document.getElementById('game').style = "display: block";
+    document.getElementById('form').style = "display: none;opacity:0";
+
 
     var socket = io();
-    var joinCode = prompt("code: ")
-    var name = prompt("whats ur name") || "guest"
+    var joinCode = document.getElementById("formcode").value;
+    var name = document.getElementById("formname").value;
     socket.emit("joinGame", { code: joinCode, name: name, client: clientCode })
     socket.on("joinGame" + clientCode, function(g) {
         console.log(g);
@@ -166,8 +172,7 @@ var client = function() {
 var host = function() {
     document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
     document.getElementById('pregame').style = "display: none;"
-    document.getElementById('shadow').style = "display: block; opacity: 0;"
-    document.getElementById('game').style = "display: block";
+    document.getElementById('shadow').style = "display: none; opacity: 0;"
     document.getElementById("game-canvas").width = window.innerWidth;
     document.getElementById("game-canvas").height = window.innerHeight;
 
@@ -176,9 +181,9 @@ var host = function() {
     socket.emit("newGame", clientCode);
     socket.on("newGame" + clientCode, function(msg) {
 
-        alert("code is " + msg.code);
         game.code = msg.code;
         document.getElementById("code").innerHTML = "Join code: " + msg.code;
+        document.getElementById("waitingcode").innerHTML = "Use code " + msg.code + " to join this session.";
 
     })
 
@@ -186,6 +191,9 @@ var host = function() {
         document.getElementById("connected").innerHTML = "Connected: " + g.map(function(e) {
             return e.name
         }).join(", ");
+        document.getElementById("waitingplayers").innerHTML = g.map(function(e) {
+            return e.name
+        }).join("<br>");
     });
 
     var enemyTypes = {
@@ -338,7 +346,7 @@ var host = function() {
 
     var maxTurretLifetime = 2000
 
-    function draw(t) {
+    window.draw = function(t) {
         if (canvas.getContext) {
             window.ctx = canvas.getContext('2d');
 
@@ -555,5 +563,15 @@ var host = function() {
         window.requestAnimationFrame(draw)
     }
     window.counter = 0;
+    document.getElementById("waiting").style = "display: block; opacity: 1"
+
+}
+
+var actuallyStart = function() {
+    document.getElementById("waiting").style = "display: none"
+    document.getElementById('game').style = "display: block";
+    document.getElementById("game-canvas").width = window.innerWidth;
+    document.getElementById("game-canvas").height = window.innerHeight;
     draw();
+
 }

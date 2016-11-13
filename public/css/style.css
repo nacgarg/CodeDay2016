@@ -15,6 +15,7 @@ a {
 
 .hidden {
     opacity: 0;
+    -webkit-transition: all 0.5s;
 }
 
 .prompt {
@@ -88,11 +89,10 @@ a {
 }
 
 .counter {
-   background-color: #00B7FF;
-   padding: 20px;
-   border-radius: 10px;
-   box-shadow: 0px 0px 50px gray;
-
+    background-color: #00B7FF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 50px gray;
 }
 
 .statusbar-elem {
@@ -111,4 +111,15 @@ a {
     position: absolute;
     width: 100%;
     top: 0;
+}
+
+.big {
+    color: black;
+    font-size: 70px;
+}
+
+.cool-input {
+    font-size: 60px;
+    margin: 40px;
+    padding: 20px;
 }

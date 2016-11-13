@@ -11,14 +11,33 @@
 
 <body>
     <div class='hidden prompt' id="client-host-selector">
+        <center>
+            <h1>Choose one...</h1></center>
         <button onclick="client()" class="btn client-btn">Client</button>
         <button onclick="host()" class="btn host-btn">Host</button>
     </div>
     <div id="shadow"></div>
     <div id="pregame">
-        <h1>Welcome to game thing</h1> if computer, ask for host or client, if phone, then be client host: redirect to host page, /host maybe, backend will return html for /host which contains its session code client: textbox to input session code, when they enter it, redirect to game page
-        <hr>
-        <button onclick="start()" , class="btn">start</button>
+        <center>
+            <h1 class="big">PolyDefense</h1>
+            <button onclick="start()" , class="btn">start</button>
+        </center>
+    </div>
+    <div id="waiting" class="hidden">
+        <center>
+            <h1 class="big" id="waitingcode"></h1>
+            <h1><div id="waitingplayers">Waiting for Players...</div><br>Click the button when you're ready!</h1>
+            <button class="btn" onclick="actuallyStart()">Ready!</button>
+        </center>
+    </div>
+    <div class="hidden" id="form">
+        <center>
+            <input class="cool-input" type="text" id="formcode" placeholder="code" />
+            <br>
+            <input class="cool-input" type="text" id="formname" placeholder="name" />
+            <br>
+            <button class="btn" onclick="actuallyClient()">Go!</button>
+        </center>
     </div>
     <div id="game">
         <div id="statusbar">
