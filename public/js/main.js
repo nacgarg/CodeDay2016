@@ -181,7 +181,7 @@ var host = function() {
 
     var enemyTypes = {
         triangle: { health: 3, speed: 5, damage: 0.3 },
-        pentagon: { health: 9, speed: 0.2 },
+        pentagon: { health: 9, speed: 0.2, damage: 0.5},
         star: { health: 15, speed: 0.5, damage: 0.1 },
         circle: { health: 1, speed: 7, damage: 0.1 }
     }
@@ -360,8 +360,6 @@ var host = function() {
                 var a = percent / 100,
                     b = end * a;
                 c = b + start;
-                console.log(b)
-                console.log(a)
 
                 //Return a CSS HSL string
                 return "hsl(" + c + ",100%,50%)";
@@ -370,8 +368,9 @@ var host = function() {
 
             ctx.fillStyle = hsl_col_perc(game.health / 10, 0, 120);
 
-
+            if (game.health >= 1) {
             ctx.fillRect(translate_x - 160, translate_y - 180, 320 * game.health / 1000, 20);
+        	}
 
 
             /* Draw enemies */
