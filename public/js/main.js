@@ -257,10 +257,24 @@ var host = function() {
             /* Animate bullets */
             // for bullet in bullets, figure angle toward enemy (arctan), then move bullet.turret.speed
 
+            /* Move enemies */ 
+
+            for (var i = game.enemies.length - 1; i >= 0; i--) {
+                var enemy = game.enemies[i];
+                var target = enemy.target;
+                var angle = Math.atan2(target[1], target[0])
+                var xSpeed = enemy.speed * Math.cos(angle);
+                var ySpeed = enemy.speed * Math.sin(angle);
+                enemy.x += xSpeed;
+                enemy.y += ySpeed;
+            }
+
             /* Spawn enemies */
             if (t % 500 == 0) {
                 var rand = Math.random();
-                var enemy = {}
+                var enemy = {
+                    angle: 0
+                }
                 var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
                 switch (edge) {
                     case "up":
@@ -293,6 +307,7 @@ var host = function() {
                     enemy.health = enemyTypes.triangle.health
                     enemy.target = [translate_x, translate_y]
                 }
+                game.enemies.push(enemy);
             }
         }
         window.requestAnimationFrame(draw)
