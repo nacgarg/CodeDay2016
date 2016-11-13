@@ -13,21 +13,21 @@
     <div class='hidden prompt' id="client-host-selector">
         <center>
             <h1>Choose one...</h1></center>
-        <button onclick="client()" class="btn client-btn">Client</button>
-        <button onclick="host()" class="btn host-btn">Host</button>
+        <button onclick="javascript:client()" class="btn client-btn">Client</button>
+        <button onclick="javascript:host()" class="btn host-btn">Host</button>
     </div>
     <div id="shadow"></div>
     <div id="pregame">
         <center>
             <h1 class="big">PolyDefense</h1>
-            <button onclick="start()" , class="btn">start</button>
+            <button onclick="javascript:start()" , class="btn">start</button>
         </center>
     </div>
     <div id="waiting" style="display: none" class="hidden">
         <center>
             <h1 class="big" id="waitingcode"></h1>
             <h1><div id="waitingplayers">Waiting for Players...</div><br>Click the button when you're ready!</h1>
-            <button class="btn" onclick="actuallyStart()">Ready!</button>
+            <button class="btn" onclick="javascript:actuallyStart()">Ready!</button>
         </center>
     </div>
     <div class="hidden" style="display: none" id="form">
@@ -36,7 +36,14 @@
             <br>
             <input class="cool-input" type="text" id="formname" placeholder="name" />
             <br>
-            <button class="btn" onclick="actuallyClient()">Go!</button>
+            <button class="btn" onclick="javascript:actuallyClient()">Go!</button>
+        </center>
+    </div>
+    <div id="gameover" style="display: none" class="hidden">
+        <center>
+            <h1 class="big">Game over :(</h1>
+            <h1><div id="highscore"></div><br>Click the button to try again.</h1>
+            <button class="btn" onclick="javascript:initGame();actuallyStart()">Try Again!</button>
         </center>
     </div>
     <div id="game">

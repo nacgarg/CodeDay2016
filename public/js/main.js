@@ -168,7 +168,24 @@ var actuallyClient = function() {
     }, false);
 
 }
+var initGame = function() {
+    window.game = {
+        health: 500,
+        turrets: [],
+        income: 1, //income per wave
+        ink: 20, //how many times you can draw something
+        wave: 1,
+        enemies: [],
+        score: 0
+            // numofenemies: wave * wave,
+    }
+    window.enemyFrequency = 500;
+    window.numEnemies = 1;
 
+    window.maxTurretLifetime = 2000
+    window.counter = 0;
+
+}
 var host = function() {
     document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
     document.getElementById('pregame').style = "display: none;"
@@ -203,16 +220,7 @@ var host = function() {
         circle: { health: 1, speed: 7, damage: 0.1 }
     }
 
-    window.game = {
-        health: 500,
-        turrets: [],
-        income: 1, //income per wave
-        ink: 20, //how many times you can draw something
-        wave: 1,
-        enemies: [],
-        score: 0
-            // numofenemies: wave * wave,
-    }
+    initGame();
 
     var canvas = document.getElementById('game-canvas');
     var translate_x = canvas.width / 2
@@ -236,6 +244,7 @@ var host = function() {
         if (gesture.name == "rectangle") {
             // new Brick (moar health)
             game.health += 60
+            socket.emit("health", {code: game.code, health: game.health})
         }
 
         if (gesture.name == "star") {
@@ -273,9 +282,7 @@ var host = function() {
             ctx.lineTo(rightX, rightY);
             ctx.lineTo(tipX, tipY);
             ctx.stroke();
-        }
-
-        else if (enemy.type === "pentagon") {
+        } else if (enemy.type === "pentagon") {
             ctx.fillStyle = "rgb(255,0,0)";
             tipX = enemy.x;
             tipY = enemy.y - 15;
@@ -305,7 +312,7 @@ var host = function() {
 
         }
         if (enemy.type === "star") {
-             ctx.fillStyle = "rgb(0,0,255)";
+            ctx.fillStyle = "rgb(0,0,255)";
             tipX = enemy.x;
             tipY = enemy.y - 15;
             s1 = 15 * Math.sin((2 * Math.PI) / 5)
@@ -330,8 +337,7 @@ var host = function() {
             ctx.lineTo(tipX, tipY);
             ctx.stroke();
 
-        }
-        else if (enemy.type === "circle") {
+        } else if (enemy.type === "circle") {
             ctx.fillStyle = "rgb(255,255,0)";
             ctx.beginPath();
             ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2, true);
@@ -349,10 +355,6 @@ var host = function() {
 
         // }
     }
-    var enemyFrequency = 500;
-    var numEnemies = 1;
-
-    var maxTurretLifetime = 2000
 
     window.draw = function(t) {
         if (canvas.getContext) {
@@ -563,8 +565,8 @@ var host = function() {
             document.getElementById("health").innerHTML = "Health: " + Math.round(game.health);
 
             if (game.health < 0) {
-                alert("Game over! You scored " + game.score)
-                window.location.reload();
+                document.getElementById("highscore").innerHTML = "You scored " + game.score + "!"
+                gameover();
             }
 
         }
@@ -580,6 +582,12 @@ var actuallyStart = function() {
     document.getElementById('game').style = "display: block";
     document.getElementById("game-canvas").width = window.innerWidth;
     document.getElementById("game-canvas").height = window.innerHeight;
+    document.getElementById("gameover").style = "display: none; opacity: 0;transform:scale(10, 10)";
     draw();
 
+}
+
+var gameover = function() {
+    document.getElementById("game").style = "display: none; opacity: 0";
+    document.getElementById("gameover").style = "display: block; opacity: 1; transform: scale(1, 1)";
 }

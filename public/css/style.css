@@ -16,6 +16,7 @@ a {
 .hidden {
     opacity: 0;
     -webkit-transition: all 0.5s;
+    transition: all 0.5s;
 }
 
 .prompt {
@@ -122,4 +123,10 @@ a {
     font-size: 60px;
     margin: 40px;
     padding: 20px;
+}
+
+#gameover {
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    transform: scale(10, 10);
 }
