@@ -376,7 +376,7 @@ var host = function() {
             for (var i = game.turrets.length - 1; i >= 0; i--) {
                 if (++game.turrets[i].lifetime >= maxTurretLifetime) {
                     // kill turret
-                    game.turrets[i].splice(i, 1);
+                    game.turrets.splice(i, 1);
                     continue;
                 }
                 ctx.beginPath();
