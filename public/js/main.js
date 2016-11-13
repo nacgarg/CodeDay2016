@@ -445,7 +445,7 @@ var host = function() {
                 // rotate enemies
 
                 // check if enemy is in castle, if so decrease health by its damage
-                if (enemy.x > translate_x - 160 && enemy.x < translate_x + 160 && enemy.y > translate_y - 100 && enemy.y < translate_y + 1000) {
+                if (enemy.x > translate_x - 160 && enemy.x < translate_x + 160 && enemy.y > translate_y - 100 && enemy.y < translate_y + 100) {
                     game.health -= enemy.damage
                         // maybe enemy health goes down if it's in the castle?
                 }
@@ -458,8 +458,10 @@ var host = function() {
 
                 if (++counter % enemyFrequency == 0) {
                     var rand = Math.random();
-                    enemyFrequency /= 2;
-                    numEnemies++;
+                    if (enemyFrequency > 100 && numEnemies < 5) {
+                        enemyFrequency /= 2;
+                        numEnemies++;
+                    }
                     var enemy = {
                         angle: 0,
                         target: { x: translate_x, y: translate_y }
@@ -494,7 +496,6 @@ var host = function() {
                     console.log('made enemy', enemy);
                 }
             }
-
             // Check if you are rip
 
             document.getElementById("score").innerHTML = game.score;
