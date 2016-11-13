@@ -97,12 +97,12 @@ var client = function() {
         ctx.closePath();
         if (_points.length >= 10) {
             var result = _r.Recognize(_points);
-            sendGesture(result.Name, result.Score)
+            ctx.strokeStyle = sendGesture(result.Name, result.Score) ? "#00FF00" : "#FF0000";
+            ctx.stroke();
         }
         _points = [];
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = sendGesture(result.Name, result.Score) ? "#00FF00" : "#FF0000";
-        ctx.stroke();
+        setTimeout(function() { ctx.clearRect(0, 0, canvas.width, canvas.height); }, 100);
+
     }, false);
 
     document.addEventListener('mousedown', function(e) {
@@ -166,7 +166,7 @@ var host = function() {
     console.info('Hosting a game');
     socket.emit("newGame", clientCode);
     socket.on("newGame" + clientCode, function(msg) {
-    
+
         alert("code is " + msg.code);
         game.code = msg.code;
         document.getElementById("code").innerHTML = "Join code: " + msg.code;
@@ -236,8 +236,8 @@ var host = function() {
 
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
-            	ctx.beginPath();
-            	ctx.moveTo(game.turrets[i].x,game.turrets[i].y);
+                ctx.beginPath();
+                ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
                 ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
                 ctx.stroke();
             }
