@@ -411,7 +411,7 @@ var host = function() {
 
                     // check if bullet hit enemy, if so, decrease enemy health and reset bullet
 
-                    if (Math.sqrt(Math.pow(turret.x - target.x, 2) + Math.pow(turret.y - target.y, 2)) < 15) { //within 15 of enemy, so it probably hit it lol
+                    if (Math.sqrt(Math.pow(bullet.x - target.x, 2) + Math.pow(bullet.y - target.y, 2)) < 15) { //within 15 of enemy, so it probably hit it lol
                         target.health -= turret.damage;
                         turret.ready = true;
                     }
