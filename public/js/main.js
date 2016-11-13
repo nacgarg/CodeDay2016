@@ -415,8 +415,8 @@ var host = function() {
             }
 
             /* Spawn enemies */
-            console.log(t)
-            if (t % 500 == 0) {
+            console.log(counter);
+            if (++counter % 500 == 0) {
                 var rand = Math.random();
                 var enemy = {
                     angle: 0,
@@ -456,5 +456,6 @@ var host = function() {
         }
         window.requestAnimationFrame(draw)
     }
+    window.counter = 0;
     draw();
 }
