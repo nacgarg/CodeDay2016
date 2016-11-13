@@ -218,95 +218,97 @@ var host = function() {
     function drawEnemy(enemy) {
         if (enemy.type === "triangle") {
             ctx.fillStyle = "rgb(255,255,0)";
-            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
-            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
-            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
-            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
-            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
-            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
+            tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
+            tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
+            leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
+            leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
+            rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
+            rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
 
-			ctx.moveTo(tipX, tipY);
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.fill();
 
             ctx.fillStyle = "rgb(0,0,0)";
-			ctx.moveTo(tipX, tipY);
-			ctx.beginPath();
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.beginPath();
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.stroke();
 
         }
         if (enemy.type === "pentagon") {
             ctx.fillStyle = "rgb(255,255,0)";
-            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
-            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
-            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
-            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
-            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
-            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
+            tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
+            tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
+            leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
+            leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
+            rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
+            rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
 
-			ctx.moveTo(tipX, tipY);
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.fill();
 
             ctx.fillStyle = "rgb(0,0,0)";
-			ctx.moveTo(tipX, tipY);
-			ctx.beginPath();
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.beginPath();
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.stroke();
 
-        }if (enemy.type === "star") {
+        }
+        if (enemy.type === "star") {
             ctx.fillStyle = "rgb(255,255,0)";
-            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
-            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
-            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
-            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
-            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
-            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
+            tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
+            tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
+            leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
+            leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
+            rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
+            rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
 
-			ctx.moveTo(tipX, tipY);
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.fill();
 
             ctx.fillStyle = "rgb(0,0,0)";
-			ctx.moveTo(tipX, tipY);
-			ctx.beginPath();
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.beginPath();
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.stroke();
 
-        }if (enemy.type === "circle") {
+        }
+        if (enemy.type === "circle") {
             ctx.fillStyle = "rgb(255,255,0)";
-            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
-            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
-            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
-            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
-            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
-            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
+            tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
+            tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
+            leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
+            leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
+            rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
+            rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
 
-			ctx.moveTo(tipX, tipY);
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.fill();
 
             ctx.fillStyle = "rgb(0,0,0)";
-			ctx.moveTo(tipX, tipY);
-			ctx.beginPath();
-            ctx.lineTo(leftX,leftY);
-            ctx.lineTo(rightX,rightY);
-            ctx.lineTo(tipX,tipY);
+            ctx.moveTo(tipX, tipY);
+            ctx.beginPath();
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
             ctx.stroke();
 
         }
