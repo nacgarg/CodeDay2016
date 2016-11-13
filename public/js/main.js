@@ -372,7 +372,7 @@ var host = function() {
                         }
                     }
                     // set it as the target
-                    turret.bullet.target = enemy;
+                    turret.bullet.target = closest;
                     // fire 
                     turret.ready = false;
                     turret.bullet.x = turret.x;
