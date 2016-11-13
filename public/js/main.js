@@ -350,9 +350,10 @@ var host = function() {
             ctx.lineTo(translate_x + 160, translate_y + 100);
             ctx.lineTo(translate_x - 160, translate_y + 100);
             ctx.moveTo(translate_x - 160, translate_y + 140);
-            ctx.strokeStyle = "rgb(0,200,0)"
-            //ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
             ctx.stroke();
+            ctx.strokeStyle = "rgb(0,200,0)"
+            ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
+            
 
             /* Draw enemies */
             // for enemy in enemies, drawEnemy(enemy)
