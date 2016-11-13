@@ -441,11 +441,10 @@ var host = function() {
 
             for (var i = 0; i < numEnemies; i++) {
 
-                enemyFrequency /= 2;
-                numEnemies++;
-
                 if (++counter % enemyFrequency == 0) {
                     var rand = Math.random();
+                    enemyFrequency /= 2;
+                    numEnemies++;
                     var enemy = {
                         angle: 0,
                         target: { x: translate_x, y: translate_y }
