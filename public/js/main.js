@@ -209,7 +209,7 @@ var host = function() {
                 damage: 3,
                 x: Math.floor(Math.random() * 320) - 160 + translate_x,
                 y: Math.floor(Math.random() * 200) - 120 + translate_y,
-                ready: true // if the turret is ready to shoot, false if it is currently shooting
+                ready: true, // if the turret is ready to shoot, false if it is currently shooting
                 bullet: { x: 0, y: 0, target: null }
             })
         }
