@@ -476,6 +476,7 @@ var host = function() {
                         target: { x: translate_x, y: translate_y }
                     }
                     var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
+                    console.log("spawning from " + edge)
                     switch (edge) {
                         case "up":
                             enemy.x = Math.random() * translate_x * 2
