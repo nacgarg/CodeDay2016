@@ -450,7 +450,6 @@ var host = function() {
                 var angle = Math.atan2(enemy.y - target.y, enemy.x - target.x)
                 var xSpeed = enemy.speed * Math.cos(angle);
                 var ySpeed = enemy.speed * Math.sin(angle);
-                console.log("enemy speed", xSpeed, ySpeed)
                 enemy.x -= xSpeed;
                 enemy.y -= ySpeed;
                 // rotate enemies
