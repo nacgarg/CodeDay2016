@@ -220,6 +220,11 @@ var host = function() {
             // new Brick (moar health)
             game.health += 60
         }
+
+        if (gesture.name == "star") {
+            // upgrade a random turret
+            game.turrets[Math.floor(Math.random()*game.turrets.length)][Math.random() > 0.5 ? "damage" : "speed"] *= 2; // pick a random turret, and multiply either its damage or speed by 2
+        }
     })
 
     function drawEnemy(enemy) {
@@ -393,7 +398,7 @@ var host = function() {
                 if (!game.turrets[i].ready) {
                     //draw bullet
                     ctx.beginPath();
-                    ctx.arc(game.turrets[i].bullet.x, game.turrets[i].bullet.y, 3, 0, Math.PI * 2, true);
+                    ctx.arc(game.turrets[i].bullet.x, game.turrets[i].bullet.y, game.turrets[i].damage, 0, Math.PI * 2, true);
                     ctx.stroke();
                 }
             }
