@@ -165,30 +165,29 @@ var host = function() {
     console.info('Hosting a game');
     socket.emit("newGame", clientCode);
     socket.on("newGame" + clientCode, function(msg) {
-        window.game = msg;
-        alert("code is " + game.code);
-        document.getElementById("code").innerHTML = "Join code: " + game.code;
+    
+        alert("code is " + msg.code);
+        game.code = msg.code;
+        document.getElementById("code").innerHTML = "Join code: " + msg.code;
 
     })
 
     socket.on("newPlayer", function(g) {
         document.getElementById("connected").innerHTML = "Connected: " + g.map(function(e) {
-            return e.name }).join(", ");
+            return e.name
+        }).join(", ");
     });
 
-    socket.on("startGame", function() {
-        window.game = {
-            health: 100,
-            turrets: [],
-            income: 1, //income per wave
-            ink: 20, //how many times you can draw something
-            wave: 1,
-            enemies: [{ health: 3, type: "triangle", speed: 5, damage: 3, id: "unique id" }, { health: 9, type: "pentagon", speed: 2, damage: 5 }, { health: 15, type: "star", speed: 0.5, damage: 10 }, { health: 1, type: "circle", speed: 7, damage: 1 }],
-            numofenemies: wave * wave,
-            bullets: [{ x: 0, y: 0, target: "enemy id", turret: "turret id" }]
-        }
-
-    })
+    window.game = {
+        health: 100,
+        turrets: [],
+        income: 1, //income per wave
+        ink: 20, //how many times you can draw something
+        wave: 1,
+        enemies: [{ health: 3, type: "triangle", speed: 5, damage: 3, id: "unique id" }, { health: 9, type: "pentagon", speed: 2, damage: 5 }, { health: 15, type: "star", speed: 0.5, damage: 10 }, { health: 1, type: "circle", speed: 7, damage: 1 }],
+        // numofenemies: wave * wave,
+        bullets: [{ x: 0, y: 0, target: "enemy id", turret: "turret id" }]
+    }
 
     var canvas = document.getElementById('game-canvas');
     var translate_x = canvas.width / 2
@@ -233,6 +232,13 @@ var host = function() {
             // for (var i = game.enemies.length - 1; i >= 0; i--) {
             //     game.enemies[i]
             // }
+
+            //draw turrets
+
+            for (var i = game.turrets.length - 1; i >= 0; i--) {
+                ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
+                ctx.stroke();
+            }
 
             /* Shoot guns (calculate positions) */
 
