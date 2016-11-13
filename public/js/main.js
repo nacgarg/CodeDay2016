@@ -33,6 +33,104 @@ var client = function() {
     socket.on("joinGame" + clientCode, function(g) {
         console.log(g);
     })
+
+    var oldX;
+    var oldY;
+    var canvas;
+    var ctx;
+    var _r = new DollarRecognizer();
+    var _points = [];
+    var isMouseDown = false; // mouse only bool
+    var threshold = 3; // number of pixels required to be moved for a movement to count
+
+
+    canvas = document.getElementById("game-canvas");
+    ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    document.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        _points = [];
+        var touch = e.touches[0];
+        ctx.beginPath();
+        ctx.strokeStyle = "#000000";
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 6;
+        oldX = touch.pageX;
+        oldY = touch.pageY;
+    }, false);
+
+    document.addEventListener('touchmove', function(e) {
+        if (oldX - e.pageX < 3 && oldX - e.pageX > -3) {
+            return;
+        }
+        if (oldY - e.pageY < 3 && oldY - e.pageY > -3) {
+            return;
+        }
+        var touch = e.touches[0];
+        ctx.moveTo(oldX, oldY);
+        oldX = touch.pageX;
+        oldY = touch.pageY;
+        ctx.lineTo(oldX, oldY);
+        ctx.stroke();
+        _points[_points.length] = new Point(oldX, oldY);
+    }, false);
+
+    document.addEventListener('touchend', function(e) {
+        ctx.closePath();
+        if (_points.length >= 10) {
+            var result = _r.Recognize(_points);
+            alert(result.Name + " " + Math.round(result.Score * 100) + "%")
+        }
+        _points = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, false);
+
+    document.addEventListener('mousedown', function(e) {
+        isMouseDown = true;
+        e.preventDefault();
+        _points = [];
+        ctx.beginPath();
+        ctx.strokeStyle = "#000000";
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 6;
+        oldX = e.pageX;
+        oldY = e.pageY;
+    }, false);
+
+    document.addEventListener('mousemove', function(e) {
+        if (!isMouseDown) {
+            return;
+        }
+        if (oldX - e.pageX < 3 && oldX - e.pageX > -3) {
+            return;
+        }
+        if (oldY - e.pageY < 3 && oldY - e.pageY > -3) {
+            return;
+        }
+        ctx.moveTo(oldX, oldY);
+        oldX = e.pageX;
+        oldY = e.pageY;
+        ctx.lineTo(oldX, oldY);
+        ctx.stroke();
+        _points[_points.length] = new Point(oldX, oldY);
+    }, false);
+
+    document.addEventListener('mouseup', function(e) {
+        isMouseDown = false;
+        ctx.closePath();
+        if (_points.length >= 10) {
+            var result = _r.Recognize(_points);
+            var result = _r.Recognize(_points);
+            alert(result.Name + " " + Math.round(result.Score * 100) + "%")
+        }
+        _points = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }, false);
+
 }
 
 var host = function() {
