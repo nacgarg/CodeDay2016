@@ -320,6 +320,8 @@ var host = function() {
 
         // }
     }
+    var enemyFrequency = 500;
+    var numEnemies = 1;
 
     function draw(t) {
         if (canvas.getContext) {
@@ -393,7 +395,7 @@ var host = function() {
                 } else { // just animate the bullet
                     var bullet = turret.bullet
                     var target = bullet.target;
-                    if (target.health === 0) { // if the target is dead somehow
+                    if (target.health < 0) { // if the target is dead somehow
                         // make the bullet disappear
                         turret.ready = true;
                         continue;
@@ -436,8 +438,6 @@ var host = function() {
             }
 
             /* Spawn enemies */
-            var enemyFrequency = 500;
-            var numEnemies = 1;
 
             for (var i = 0; i < numEnemies; i++) {
 
