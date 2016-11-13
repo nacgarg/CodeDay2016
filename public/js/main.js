@@ -346,7 +346,7 @@ var host = function() {
                 ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
                 ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
                 ctx.stroke();
-                if (!turret.ready) {
+                if (!game.turrets[i].ready) {
                     //draw bullet
                     ctx.arc(game.turrets[i].bullet.x, game.turrets[i].bullet.y, 3, 0, Math.PI * 2, true);
                 }
