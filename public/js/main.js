@@ -316,7 +316,6 @@ var host = function() {
     }
 
     function draw(t) {
-        console.log(translate_x, translate_y)
         if (canvas.getContext) {
             window.ctx = canvas.getContext('2d');
 
@@ -380,6 +379,7 @@ var host = function() {
                     turret.bullet.y = turret.y;
                     var angle = Math.atan2(turret.bullet.target.y - turret.y, turret.bullet.target.x - turret.x);
                     turret.angle = angle;
+                    console.log('fired bullet')
                 } else { // just animate the bullet
                     var bullet = turret.bullet
                     var target = bullet.target;
@@ -417,7 +417,6 @@ var host = function() {
             }
 
             /* Spawn enemies */
-            console.log(counter);
             if (++counter % 500 == 0) {
                 var rand = Math.random();
                 var enemy = {
@@ -453,6 +452,7 @@ var host = function() {
                     enemy.health = enemyTypes.triangle.health
                 }
                 game.enemies.push(enemy);
+                console.log('made enemy', enemy);
             }
 
         }
