@@ -180,10 +180,10 @@ var host = function() {
     });
 
     var enemyTypes = {
-        triangle: { health: 3, speed: 5, damage: 3 },
-        pentagon: { health: 9, speed: 2 },
-        star: { health: 15, speed: 0.5, damage: 10 },
-        circle: { health: 1, speed: 7, damage: 1 }
+        triangle: { health: 3, speed: 5, damage: 0.3 },
+        pentagon: { health: 9, speed: 0.2 },
+        star: { health: 15, speed: 0.5, damage: 0.1 },
+        circle: { health: 1, speed: 7, damage: 0.1 }
     }
 
     window.game = {
