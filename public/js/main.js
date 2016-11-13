@@ -493,6 +493,8 @@ var host = function() {
 
             /* Spawn enemies */
             counter++;
+            
+            var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
 
             for (var i = 0; i < numEnemies * scaleFactor; i++) {
 
@@ -534,7 +536,6 @@ var host = function() {
                     } else {
                         enemy.type = "triangle"
                     }
-                    var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
                     maxTurretLifetime = (-1500 * Math.atan(counter / 2000)) + (1500 * Math.PI / 2)
 
                     enemy.health = enemyTypes[enemy.type].health * scaleFactor;
