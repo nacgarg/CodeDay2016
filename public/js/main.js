@@ -32,7 +32,6 @@ var client = function() {
     var name = prompt("whats ur name") || "guest"
     socket.emit("joinGame", { code: joinCode, name: name, client: clientCode })
     socket.on("joinGame" + clientCode, function(g) {
-        console.log(g);
         window.slkdfklsdfjcode = joinCode;
     })
 
@@ -313,14 +312,13 @@ var host = function() {
             ctx.strokeStyle = "rgb(0,0,0)";
             ctx.stroke();
 
-        }
-        else {
-        	        ctx.fillStyle = "rgb(0,0,0)"
-        ctx.beginPath();
-        ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2, true);
-        ctx.stroke();
-        ctx.moveTo(enemy.x - 15, enemy.y - 10);
-        ctx.strokeStyle = "rgb(0,200,0)";
+        } else {
+            ctx.fillStyle = "rgb(0,0,0)"
+            ctx.beginPath();
+            ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2, true);
+            ctx.stroke();
+            ctx.moveTo(enemy.x - 15, enemy.y - 10);
+            ctx.strokeStyle = "rgb(0,200,0)";
 
         }
     }
@@ -412,7 +410,6 @@ var host = function() {
                         if (dist < closestDist && game.enemies[i].health > 0) {
                             closestDist = dist;
                             closest = game.enemies[i]
-                            console.log('found closer enemy: ', closest);
                         }
                     }
                     // set it as the target
@@ -423,7 +420,6 @@ var host = function() {
                     turret.bullet.y = turret.y;
                     var angle = Math.atan2(turret.bullet.target.y - turret.y, turret.bullet.target.x - turret.x);
                     turret.angle = angle;
-                    console.log('fired bullet')
                 } else { // just animate the bullet
                     var bullet = turret.bullet
                     var target = bullet.target;
@@ -482,23 +478,20 @@ var host = function() {
             counter++;
 
             //var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
-
-            for (var i = 0; i < (numEnemies); i++) {
-
-                if (counter % enemyFrequency == 0) {
+            if (counter % enemyFrequency == 0) {
+                for (var i = 0; i < (numEnemies); i++) {
                     var rand = Math.random();
                     if (enemyFrequency > 100) {
-                        enemyFrequency /= 1.5;
+                        enemyFrequency /= 1.1;
                     }
                     if (numEnemies < 70) {
-                        numEnemies++
+                        numEnemies++;
                     }
                     var enemy = {
                         angle: 0,
                         target: { x: translate_x, y: translate_y }
                     }
                     var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
-                    console.log("spawning from " + edge)
 
                     if (edge === "up") {
                         enemy.x = Math.random() * translate_x * 2
@@ -532,7 +525,6 @@ var host = function() {
                     enemy.speed = enemyTypes[enemy.type].speed;
                     enemy.size = 15;
                     game.enemies.push(enemy);
-                    console.log('made enemy', enemy);
                 }
             }
             // Check if you are rip
