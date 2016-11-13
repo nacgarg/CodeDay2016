@@ -403,8 +403,8 @@ var host = function() {
                     angle = angle + angleDelta;
                     var xSpeed = turret.speed * Math.cos(angle);
                     var ySpeed = turret.speed * Math.sin(angle);
-                    bullet.x += xSpeed;
-                    bullet.y += ySpeed;
+                    bullet.x -= xSpeed;
+                    bullet.y -= ySpeed;
                 }
             }
 
