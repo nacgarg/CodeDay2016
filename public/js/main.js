@@ -202,7 +202,7 @@ var host = function() {
                 speed: 3,
                 damage: 3,
                 x: Math.floor(Math.random() * 320) - 160 + translate_x,
-                y: Math.floor(Math.random() * 200) - 100 + translate_y
+                y: Math.floor(Math.random() * 200) - 120 + translate_y
             })
         }
     })
@@ -248,6 +248,9 @@ var host = function() {
             // for bullet in bullets, figure angle toward enemy (arctan), then move bullet.turret.speed
 
             /* Spawn enemies */
+            for (var i = game.enemies.length - 1; i >= 0; i--) {
+            	ctx.//draw enemy (type, hp)
+            }
 
         }
         window.requestAnimationFrame(draw)
