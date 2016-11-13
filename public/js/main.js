@@ -344,19 +344,24 @@ var host = function() {
             /*  -   Draw Castle   -  */
             ctx.strokeStyle = "rgb(0,0,0)"
             ctx.fillStyle = "rgb(211,211,211)";
-            ctx.fillRect(translate_x - 160, translate_y - 100, 320, 200);
+            ctx.fillRect(translate_x - 160, translate_y - 120, 320, 200);
             ctx.fillStyle = "rgb(0,0,0)";
             ctx.lineWidth = 2;
-            ctx.strokeRect(translate_x - 160, translate_y - 100, 320, 200);
+            ctx.strokeRect(translate_x - 160, translate_y - 120, 320, 200);
             ctx.beginPath();
-            ctx.moveTo(translate_x - 160, translate_y - 100);
-            ctx.lineTo(translate_x + 160, translate_y - 100);
-            ctx.lineTo(translate_x + 160, translate_y + 100);
-            ctx.lineTo(translate_x - 160, translate_y + 100);
-            ctx.moveTo(translate_x - 160, translate_y + 140);
-            //ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
-            ctx.fillStyle = "rgb(0,200,0)"
-            ctx.fillRect(translate_x - 160, translate_y - 180, 320 * game.health / 1000, 40);
+            function hsl_col_perc(percent, start, end) {
+
+                var a = percent / 100,
+                    b = end * a;
+                c = b + start;
+
+                //Return a CSS HSL string
+                return "hsl(" + c + ",100%,50%)";
+            }
+
+
+            ctx.fillStyle = hsl_col_perc(game.health / 10, 120, 1);
+            ctx.fillRect(translate_x - 160, translate_y - 180, 320 * game.health / 1000, 20);
 
 
             /* Draw enemies */
