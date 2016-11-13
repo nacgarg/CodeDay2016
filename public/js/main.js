@@ -223,7 +223,7 @@ var host = function() {
 
         if (gesture.name == "star") {
             // upgrade a random turret
-            game.turrets[Math.floor(Math.random()*game.turrets.length)][Math.random() > 0.5 ? "damage" : "speed"] *= 2; // pick a random turret, and multiply either its damage or speed by 2
+            game.turrets[Math.floor(Math.random() * game.turrets.length)][Math.random() > 0.5 ? "damage" : "speed"] *= 2; // pick a random turret, and multiply either its damage or speed by 2
         }
     })
 
@@ -354,6 +354,7 @@ var host = function() {
             ctx.lineWidth = 2;
             ctx.strokeRect(translate_x - 160, translate_y - 120, 320, 200);
             ctx.beginPath();
+
             function hsl_col_perc(percent, start, end) {
 
                 var a = percent / 100,
@@ -389,7 +390,6 @@ var host = function() {
                     game.turrets[i].splice(i, 1);
                     continue;
                 }
-                console.log("rednering turret")
                 ctx.beginPath();
                 ctx.strokeStyle = "rgb(0,0,0)"
                 ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
@@ -488,14 +488,14 @@ var host = function() {
 
 
             /* Spawn enemies */
+            counter++;
 
-            for (var i = 0; i < numEnemies; i++) {
+            for (var i = 0; i < numEnemies * scaleFactor; i++) {
 
-                if (++counter % enemyFrequency == 0) {
+                if (counter % enemyFrequency == 0) {
                     var rand = Math.random();
-                    if (enemyFrequency > 100 && numEnemies < 5) {
-                        enemyFrequency /= 2;
-                        numEnemies++;
+                    if (enemyFrequency > 50) {
+                        enemyFrequency /= 1.5;
                     }
                     var enemy = {
                         angle: 0,
@@ -534,7 +534,7 @@ var host = function() {
                     maxTurretLifetime = (-1500 * Math.atan(x / 2000)) + (1500 * Math.PI / 2)
 
                     enemy.health = enemyTypes[enemy.type].health * scaleFactor;
-                    enemy.speed = enemyTypes[enemy.type].speed * scaleFactor;
+                    enemy.speed = enemyTypes[enemy.type].speed * scaleFactor / 3;
                     enemy.size = 15 * scaleFactor;
                     game.enemies.push(enemy);
                     console.log('made enemy', enemy);
