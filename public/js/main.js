@@ -166,8 +166,14 @@ var host = function() {
     socket.emit("newGame", clientCode);
     socket.on("newGame" + clientCode, function(msg) {
         window.game = msg;
-        alert("code is " + game.code)
+        alert("code is " + game.code);
+        document.getElementById("code").innerHTML = "Join code: " + game.code;
+
     })
+
+    socket.on("newPlayer", function(g) {
+        document.getElementById("connected").innerHTML = "Connected: " + g.map(function(e){return e.name}).join(", ");
+    });
 
     socket.on("startGame", function() {
         window.game = {
@@ -218,9 +224,9 @@ var host = function() {
             /* Draw enemies */
             // for enemy in enemies, drawEnemy(enemy)
 
-            for (var i = game.enemies.length - 1; i >= 0; i--) {
-                game.enemies[i]
-            }
+            // for (var i = game.enemies.length - 1; i >= 0; i--) {
+            //     game.enemies[i]
+            // }
 
             /* Shoot guns (calculate positions) */
 

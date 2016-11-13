@@ -28,7 +28,8 @@ module.exports = function(http) {
                     return g.code === code.code
                 })[0]
                 g.players.push({ name: code.name, id: code.client })
-                socket.emit("joinGame" + code.client, _.omit(g, "conn"))
+                socket.emit("joinGame"+code.code, _.omit(g, "conn"))
+                g.conn.emit("newPlayer", g.players);
             }
         });
         socket.on("gesture", function(msg) {
