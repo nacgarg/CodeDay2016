@@ -156,6 +156,9 @@ var host = function() {
     document.getElementById('pregame').style = "display: none;"
     document.getElementById('shadow').style = "display: block; opacity: 0;"
     document.getElementById('game').style = "display: block";
+    document.getElementById("game-canvas").width = window.innerWidth;
+    document.getElementById("game-canvas").height = window.innerHeight;
+
     var socket = io();
     console.info('Hosting a game');
     socket.emit("newGame", clientCode);
@@ -185,6 +188,7 @@ var host = function() {
         var canvas = document.getElementById('game-canvas');
         var translate_x = canvas.width / 2
         var translate_y = canvas.height / 2
+        console.log(translate_x, translate_y)
         if (canvas.getContext) {
             var ctx = canvas.getContext('2d');
 
