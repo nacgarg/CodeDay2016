@@ -360,13 +360,17 @@ var host = function() {
                 var a = percent / 100,
                     b = end * a;
                 c = b + start;
+                console.log(b)
+                console.log(a)
 
                 //Return a CSS HSL string
                 return "hsl(" + c + ",100%,50%)";
             }
 
 
-            ctx.fillStyle = hsl_col_perc(game.health / 10, 120, 1);
+            ctx.fillStyle = hsl_col_perc(game.health / 10, 0, 120);
+
+
             ctx.fillRect(translate_x - 160, translate_y - 180, 320 * game.health / 1000, 20);
 
 
@@ -531,7 +535,7 @@ var host = function() {
                         enemy.type = "triangle"
                     }
                     var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
-                    maxTurretLifetime = (-1500 * Math.atan(x / 2000)) + (1500 * Math.PI / 2)
+                    maxTurretLifetime = (-1500 * Math.atan(counter / 2000)) + (1500 * Math.PI / 2)
 
                     enemy.health = enemyTypes[enemy.type].health * scaleFactor;
                     enemy.speed = enemyTypes[enemy.type].speed * scaleFactor / 3;
