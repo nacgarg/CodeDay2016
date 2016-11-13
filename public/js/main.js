@@ -348,7 +348,9 @@ var host = function() {
                 ctx.stroke();
                 if (!game.turrets[i].ready) {
                     //draw bullet
+                    ctx.beginPath();
                     ctx.arc(game.turrets[i].bullet.x, game.turrets[i].bullet.y, 3, 0, Math.PI * 2, true);
+                    ctx.stroke();
                 }
             }
 
