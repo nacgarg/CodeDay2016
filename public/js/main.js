@@ -319,7 +319,7 @@ var host = function() {
         if (canvas.getContext) {
             window.ctx = canvas.getContext('2d');
 
-            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             /*  -   Draw Castle   -  */
             ctx.fillStyle = "rgb(211,211,211)";
             ctx.fillRect(translate_x - 160, translate_y - 50, 320, 200);
@@ -441,17 +441,15 @@ var host = function() {
                 }
                 if (rand > 0.9) {
                     enemy.type = "star"
-                    enemy.health = enemyTypes.star.health
                 } else if (rand > 0.65) {
                     enemy.type = "pentagon"
-                    enemy.health = enemyTypes.pentagon.health
                 } else if (rand > 0.4) {
                     enemy.type = "circle"
-                    enemy.health = enemyTypes.circle.health
                 } else {
                     enemy.type = "triangle"
-                    enemy.health = enemyTypes.triangle.health
                 }
+                enemy.health = enemyTypes[enemy.type].health;
+                enemy.speed = enemyTypes[enemy.type].speed;
                 game.enemies.push(enemy);
                 console.log('made enemy', enemy);
             }
