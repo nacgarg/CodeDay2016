@@ -481,10 +481,8 @@ var host = function() {
             if (counter % enemyFrequency == 0) {
                 for (var i = 0; i < (numEnemies); i++) {
                     var rand = Math.random();
-                    if (enemyFrequency > 100) {
-                        enemyFrequency /= 1.1;
-                    }
-                    if (numEnemies < 70) {
+                    if (enemyFrequency > 100 && counter % 1500 && numEnemies < 70) {
+                        enemyFrequency /= 2;
                         numEnemies++;
                     }
                     var enemy = {
@@ -521,9 +519,9 @@ var host = function() {
                     }
                     maxTurretLifetime = (-1500 * Math.atan(counter / 2000)) + (1500 * Math.PI / 2)
 
-                    enemy.health = enemyTypes[enemy.type].health;
-                    enemy.speed = enemyTypes[enemy.type].speed;
-                    enemy.size = 15;
+                    enemy.health = enemyTypes[enemy.type].health * Math.random() * Math.sqrt(counter) / 30 + 1;
+                    enemy.speed = enemyTypes[enemy.type].speed * Math.random() * Math.sqrt(counter) / 30 + 1;
+                    enemy.size = 15 * Math.random() * Math.sqrt(counter) / 30 + 1;
                     game.enemies.push(enemy);
                 }
             }
