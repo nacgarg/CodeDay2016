@@ -325,7 +325,7 @@ var host = function() {
     var enemyFrequency = 500;
     var numEnemies = 1;
 
-    var maxTurretLifetime = 1500
+    var maxTurretLifetime = 2000
 
     function draw(t) {
         if (canvas.getContext) {
@@ -374,7 +374,7 @@ var host = function() {
 
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
-                if (game.turrets[i].lifetime >= maxTurretLifetime) {
+                if (++game.turrets[i].lifetime >= maxTurretLifetime) {
                     // kill turret
                     game.turrets[i].splice(i, 1);
                     continue;
@@ -476,14 +476,13 @@ var host = function() {
 
             /* Spawn enemies */
             counter++;
-
+            numEnemies = Math.floor(0.000003*Math.pow(counter, 1.8)) + 1
             //var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
             if (counter % enemyFrequency == 0) {
                 for (var i = 0; i < (numEnemies); i++) {
                     var rand = Math.random();
                     if (enemyFrequency > 100 && counter % 1500 && numEnemies < 70) {
                         enemyFrequency /= 2;
-                        numEnemies++;
                     }
                     var enemy = {
                         angle: 0,
