@@ -202,6 +202,7 @@ var host = function() {
     var translate_y = canvas.height / 2
 
     socket.on("newGesture", function(gesture) {
+        console.log(gesture);
         if (gesture.name == "triangle") {
             // new Turret
             game.turrets.push({
@@ -364,6 +365,7 @@ var host = function() {
 
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
+                console.log("rednering turret")
                 ctx.beginPath();
                 ctx.strokeStyle = "rgb(0,0,0)"
                 ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
@@ -494,7 +496,7 @@ var host = function() {
                         enemy.y = Math.random() * translate_y * 2
                         enemy.x = translate_x * 2 - Math.random() * 10
                     }
-                    
+
                     if (rand > 0.9) {
                         enemy.type = "star"
                     } else if (rand > 0.65) {
