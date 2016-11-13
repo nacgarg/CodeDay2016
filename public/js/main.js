@@ -320,7 +320,7 @@ var host = function() {
         if (canvas.getContext) {
             window.ctx = canvas.getContext('2d');
 
-
+            ctx.clearRect(0,0,canvas.width, canvas.height);
             /*  -   Draw Castle   -  */
             ctx.fillStyle = "rgb(211,211,211)";
             ctx.fillRect(translate_x - 160, translate_y - 50, 320, 200);
