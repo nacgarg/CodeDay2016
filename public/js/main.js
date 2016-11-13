@@ -494,14 +494,17 @@ var host = function() {
             /* Spawn enemies */
             counter++;
 
-            var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
+            //var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
 
-            for (var i = 0; i < (numEnemies + 2) * scaleFactor; i++) {
+            for (var i = 0; i < (numEnemies) ; i++) {
 
                 if (counter % enemyFrequency == 0) {
                     var rand = Math.random();
-                    if (enemyFrequency > 50) {
+                    if (enemyFrequency > 100) {
                         enemyFrequency /= 1.5;
+                    }
+                    if (numEnemies < 70) {
+                    	numEnemies ++
                     }
                     var enemy = {
                         angle: 0,
@@ -538,9 +541,9 @@ var host = function() {
                     }
                     maxTurretLifetime = (-1500 * Math.atan(counter / 2000)) + (1500 * Math.PI / 2)
 
-                    enemy.health = enemyTypes[enemy.type].health * scaleFactor;
-                    enemy.speed = enemyTypes[enemy.type].speed * scaleFactor / 3;
-                    enemy.size = 15 * scaleFactor;
+                    enemy.health = enemyTypes[enemy.type].health ;
+                    enemy.speed = enemyTypes[enemy.type].speed ;
+                    enemy.size = 15 ;
                     game.enemies.push(enemy);
                     console.log('made enemy', enemy);
                 }
