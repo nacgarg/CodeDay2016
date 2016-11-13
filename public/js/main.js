@@ -219,10 +219,10 @@ var host = function() {
         if (enemy.health <= 0) {
             return;
         }
-    	ctx.fillStyle = "rgb(0,0,0)"
-    	ctx.beginPath();
-    	ctx.arc(enemy.x, enemy.y, 30, 0, Math.PI * 2, true);
-    	ctx.stroke();
+        ctx.fillStyle = "rgb(0,0,0)"
+        ctx.beginPath();
+        ctx.arc(enemy.x, enemy.y, 30, 0, Math.PI * 2, true);
+        ctx.stroke();
         // if (enemy.type === "triangle") {
         //     ctx.fillStyle = "rgb(255,255,0)";
         //     tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
@@ -368,8 +368,9 @@ var host = function() {
                     // see which enemy is closest
                     var closestDist = 9999;
                     var closest;
-                    if (game.enemies.length === 0) { //nothing to shoot
-                        continue;
+                    if (game.enemies.filter(function(e) {
+                            return e.health > 0 }).length === 0) { //nothing to shoot
+
                     }
                     for (var i = game.enemies.length - 1; i >= 0; i--) {
                         var dist = Math.sqrt(Math.pow(turret.x - game.enemies[i].x, 2) + Math.pow(turret.y - game.enemies[i].y, 2));
@@ -433,7 +434,7 @@ var host = function() {
             }
 
             /* Spawn enemies */
-            if (++counter % 500 == 0) {
+            if (++counter % 500 - counter/1000 == 0) {
                 var rand = Math.random();
                 var enemy = {
                     angle: 0,
