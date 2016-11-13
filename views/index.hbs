@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Title of the document</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <div class='hidden prompt' id="client-host-selector">
+        <button onclick="client()" class="btn client-btn">Client</button>
+        <button onclick="host()" class="btn host-btn">Host</button>
+    </div>
+    <div id="shadow"></div>
+    <div id="pregame">
+        <h1>Welcome to game thing</h1> if computer, ask for host or client, if phone, then be client host: redirect to host page, /host maybe, backend will return html for /host which contains its session code client: textbox to input session code, when they enter it, redirect to game page
+        <hr>
+        <button onclick="start()" , class="btn">start</button>
+    </div>
+    <div id="game">
+    <canvas id="game-canvas">Your browser doesn't support canvas :(</canvas>
+    </div>
+    <script type="text/javascript" src="/js/main.js"></script>
+</body>
+
+</html>
