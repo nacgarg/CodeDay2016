@@ -230,7 +230,7 @@ var host = function() {
         ctx.stroke();
         ctx.moveTo(enemy.x - 15, enemy.y - 10);
         ctx.fillStyle = "rgb(0,200,0)";
-        ctx.lineTo(enemy.x - 15 + 2*enemy.health/enemyTypes[enemy.type].health);
+        ctx.lineTo(enemy.x - 15 + 2*enemy.health/enemyTypes[enemy.type].health, enemy.y-10);
         // if (enemy.type === "triangle") {
         //     ctx.fillStyle = "rgb(255,255,0)";
         //     tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
