@@ -20,25 +20,30 @@ var start = function() {
         document.getElementById('shadow').style = "display: block; opacity: 0.5;"
     }
 }
-window.clientCode = randomString(9) 
+window.clientCode = randomString(9)
 
 var client = function() {
-	var socket = io();
-	var joinCode = prompt("code: ")
-	var name = prompt("whats ur name") || "guest"
-	socket.emit("joinGame", {code: joinCode, name: name, client: clientCode})
-	socket.on("joinGame"+clientCode, function(g) {
-		console.log(g);
-	})
+    document.getElementById('pregame').style = "display: none;"
+    document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
+    document.getElementById('shadow').style = "display: block; opacity: 0;"
+    var socket = io();
+    var joinCode = prompt("code: ")
+    var name = prompt("whats ur name") || "guest"
+    socket.emit("joinGame", { code: joinCode, name: name, client: clientCode })
+    socket.on("joinGame" + clientCode, function(g) {
+        console.log(g);
+    })
 }
 
 var host = function() {
-	var socket = io();
-	console.info('Hosting a game');
-	socket.emit("newGame", clientCode);
-	socket.on("newGame"+clientCode, function(msg) {
-		window.game = msg;
-		alert("code is " + game.code)
-	})
+    document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
+    document.getElementById('pregame').style = "display: none;"
+    document.getElementById('shadow').style = "display: block; opacity: 0;"
+    var socket = io();
+    console.info('Hosting a game');
+    socket.emit("newGame", clientCode);
+    socket.on("newGame" + clientCode, function(msg) {
+        window.game = msg;
+        alert("code is " + game.code)
+    })
 }
-
