@@ -234,8 +234,9 @@ var host = function() {
             // }
 
             //draw turrets
-
             for (var i = game.turrets.length - 1; i >= 0; i--) {
+            	ctx.beginPath();
+            	ctx.moveTo(game.turrets[i].x,game.turrets[i].y);
                 ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
                 ctx.stroke();
             }
