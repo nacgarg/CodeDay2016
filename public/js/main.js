@@ -369,6 +369,7 @@ var host = function() {
                         if (dist < closest) {
                             closestDist = dist;
                             closest = game.enemies[i]
+                            console.log('found closer enemy: ', closest);
                         }
                     }
                     // set it as the target
