@@ -26,13 +26,27 @@ var client = function() {
     document.getElementById('pregame').style = "display: none;"
     document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
     document.getElementById('shadow').style = "display: block; opacity: 0;"
+    document.getElementById('game').style = "display: block";
     var socket = io();
     var joinCode = prompt("code: ")
     var name = prompt("whats ur name") || "guest"
     socket.emit("joinGame", { code: joinCode, name: name, client: clientCode })
     socket.on("joinGame" + clientCode, function(g) {
         console.log(g);
+        window.code = g.code
     })
+
+    function sendGesture(name, percent) {
+        if (percent > 0.7) {
+            socket.emit("gesture", { name: name, score: percent, id: clientCode, code: code});
+            document.getElementById("gesture").innerHTML = name + " " + Math.round(percent * 100) + "%"
+            return true
+        } else {
+            return false
+        }
+
+
+    }
 
     var oldX;
     var oldY;
@@ -82,7 +96,7 @@ var client = function() {
         ctx.closePath();
         if (_points.length >= 10) {
             var result = _r.Recognize(_points);
-            alert(result.Name + " " + Math.round(result.Score * 100) + "%")
+            sendGesture(result.Name, result.Score)
         }
         _points = [];
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -100,6 +114,8 @@ var client = function() {
         oldX = e.pageX;
         oldY = e.pageY;
     }, false);
+
+
 
     document.addEventListener('mousemove', function(e) {
         if (!isMouseDown) {
@@ -125,10 +141,12 @@ var client = function() {
         if (_points.length >= 10) {
             var result = _r.Recognize(_points);
             var result = _r.Recognize(_points);
-            alert(result.Name + " " + Math.round(result.Score * 100) + "%")
+            ctx.strokeStyle = sendGesture(result.Name, result.Score) ? "#00FF00" : "#FF0000";
+            ctx.stroke();
         }
+
         _points = [];
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        setTimeout(function() { ctx.clearRect(0, 0, canvas.width, canvas.height); }, 100);
     }, false);
 
 }
@@ -137,6 +155,7 @@ var host = function() {
     document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
     document.getElementById('pregame').style = "display: none;"
     document.getElementById('shadow').style = "display: block; opacity: 0;"
+    document.getElementById('game').style = "display: block";
     var socket = io();
     console.info('Hosting a game');
     socket.emit("newGame", clientCode);
