@@ -27,6 +27,7 @@ var client = function() {
     document.getElementById('client-host-selector').style = "opacity: 0; transform: scale(0, 0); display: block"
     document.getElementById('shadow').style = "display: block; opacity: 0;"
     document.getElementById('game').style = "display: block";
+
     var socket = io();
     var joinCode = prompt("code: ")
     var name = prompt("whats ur name") || "guest"
@@ -34,6 +35,14 @@ var client = function() {
     socket.on("joinGame" + clientCode, function(g) {
         window.slkdfklsdfjcode = joinCode;
     })
+
+    socket.on("score", function(s) {
+        document.getElementById('score').innerHTML = s;
+    });
+
+    socket.on("health", function(s) {
+        document.getElementById('health').innerHTML = Math.round(s);
+    });
 
     function sendGesture(name, percent) {
         if (percent > 0.7) {
@@ -448,7 +457,8 @@ var host = function() {
                         target.health -= turret.damage;
                         turret.ready = true;
                         if (target.health <= 0) { //ded
-                            game.score += 1
+                            game.score += 1;
+                            socket.emit("score", { code: game.code, score: game.score });
                         }
                     }
                 }
@@ -469,15 +479,17 @@ var host = function() {
                 // check if enemy is in castle, if so decrease health by its damage
                 if (enemy.x > translate_x - 160 && enemy.x < translate_x + 160 && enemy.y > translate_y - 100 && enemy.y < translate_y + 100 && enemy.health > 0) {
                     game.health -= enemyTypes[enemy.type].damage
-                        // maybe enemy health goes down if it's in the castle?
+                    socket.emit("health", { code: game.code, health: game.health });
+
+                    // maybe enemy health goes down if it's in the castle?
                 }
             }
 
 
             /* Spawn enemies */
             counter++;
-            numEnemies = Math.floor(0.000003*Math.pow(counter, 1.8)) + 1
-            //var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
+            numEnemies = Math.floor(0.000003 * Math.pow(counter, 1.8)) + 1
+                //var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
             if (counter % enemyFrequency == 0) {
                 for (var i = 0; i < (numEnemies); i++) {
                     var rand = Math.random();
