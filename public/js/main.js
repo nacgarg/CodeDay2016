@@ -100,6 +100,8 @@ var client = function() {
         }
         _points = [];
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = sendGesture(result.Name, result.Score) ? "#00FF00" : "#FF0000";
+        ctx.stroke();
     }, false);
 
     document.addEventListener('mousedown', function(e) {
@@ -174,8 +176,9 @@ var host = function() {
             income: 1, //income per wave
             ink: 20, //how many times you can draw something
             wave: 1,
-            enemies: [{ health: 3, type: "triangle", speed: 5, damage: 3 }, { health: 9, type: "pentagon", speed: 2, damage: 5 }, { health: 15, type: "star", speed: 0.5, damage: 10 }, { health: 1, type: "circle", speed: 7, damage: 1 }],
+            enemies: [{ health: 3, type: "triangle", speed: 5, damage: 3, id: "unique id" }, { health: 9, type: "pentagon", speed: 2, damage: 5 }, { health: 15, type: "star", speed: 0.5, damage: 10 }, { health: 1, type: "circle", speed: 7, damage: 1 }],
             numofenemies: wave * wave,
+            bullets: [{ x: 0, y: 0, target: "enemy id", turret: "turret id" }]
         }
         var translate_x = canvas.width / 2
         var translate_y = canvas.height / 2
@@ -198,6 +201,8 @@ var host = function() {
         if (canvas.getContext) {
             var ctx = canvas.getContext('2d');
 
+
+            /*  -   Draw Castle   -  */
             ctx.fillStyle = "rgb(211,211,211)";
             ctx.fillRect(translate_x - 160, translate_y - 50, 320, 200);
             ctx.fillStyle = "rgb(0,0,0)";
@@ -210,12 +215,19 @@ var host = function() {
             ctx.lineTo(translate_x - 160, translate_y + 100);
             ctx.lineTo(translate_x + 160, translate_y - 100);
 
+            /* Draw enemies */
+            // for enemy in enemies, drawEnemy(enemy)
 
+            for (var i = game.enemies.length - 1; i >= 0; i--) {
+                game.enemies[i]
+            }
 
+            /* Shoot guns (calculate positions) */
 
+            /* Animate bullets */
+            // for bullet in bullets, figure angle toward enemy (arctan), then move bullet.turret.speed
 
-
-
+            /* Spawn enemies */
 
         }
         window.requestAnimationFrame(draw)

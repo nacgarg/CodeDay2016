@@ -33,7 +33,7 @@ module.exports = function(http) {
         });
         socket.on("gesture", function(msg) {
             if (!game.games.filter(function(g) {
-                    return g.code === code.code
+                    return g.code === msg.code
                 }).length < 1) {
                 return;
 
