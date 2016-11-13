@@ -38,11 +38,11 @@ var client = function() {
     })
 
     socket.on("score", function(s) {
-        document.getElementById('score').innerHTML = s;
+        document.getElementById('score').innerHTML = "Score: " + s;
     });
 
     socket.on("health", function(s) {
-        document.getElementById('health').innerHTML = Math.round(s);
+        document.getElementById('health').innerHTML = "Health: " + Math.round(s);
     });
 
     function sendGesture(name, percent) {
