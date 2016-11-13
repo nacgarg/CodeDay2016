@@ -395,6 +395,7 @@ var host = function() {
                     if (target.health === 0) { // if the target is dead somehow
                         // make the bullet disappear
                         turret.ready = true;
+                        continue;
                     }
                     var angle = Math.atan2(bullet.y - target.y, bullet.x - target.x);
                     var angleDelta = angle - turret.angle;
