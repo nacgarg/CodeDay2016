@@ -230,7 +230,7 @@ var host = function() {
         ctx.stroke();
         ctx.moveTo(enemy.x - 15, enemy.y - 10);
         ctx.strokeStyle = "rgb(0,200,0)";
-        ctx.lineTo(enemy.x - 15 + 2*enemy.health/enemyTypes[enemy.type].health, enemy.y-10);
+        ctx.lineTo(enemy.x - 15 + 2 * enemy.health / enemyTypes[enemy.type].health, enemy.y - 10);
         ctx.stroke();
         // if (enemy.type === "triangle") {
         //     ctx.fillStyle = "rgb(255,255,0)";
@@ -351,7 +351,7 @@ var host = function() {
             ctx.lineTo(translate_x - 160, translate_y + 100);
             ctx.moveTo(translate_x - 160, translate_y + 140);
             ctx.strokeStyle = "rgb(0,200,0)"
-            //ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
+                //ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
             ctx.stroke();
 
             /* Draw enemies */
@@ -433,8 +433,8 @@ var host = function() {
                     if (Math.sqrt(Math.pow(bullet.x - target.x, 2) + Math.pow(bullet.y - target.y, 2)) < 15) { //within 15 of enemy, so it probably hit it lol
                         target.health -= turret.damage;
                         turret.ready = true;
-                        if (target.health < 0) { //ded
-                            score += 1
+                        if (target.health <= 0) { //ded
+                            game.score += 1
                         }
                     }
                 }
@@ -454,7 +454,7 @@ var host = function() {
                 // rotate enemies
 
                 // check if enemy is in castle, if so decrease health by its damage
-                if (enemy.x > translate_x - 160 && enemy.x < translate_x + 160 && enemy.y > translate_y - 100 && enemy.y < translate_y + 100) {
+                if (enemy.x > translate_x - 160 && enemy.x < translate_x + 160 && enemy.y > translate_y - 100 && enemy.y < translate_y + 100 && enemy.health > 0) {
                     game.health -= enemyTypes[enemy.type].damage
                         // maybe enemy health goes down if it's in the castle?
                 }
@@ -508,7 +508,9 @@ var host = function() {
             }
             // Check if you are rip
 
-            document.getElementById("score").innerHTML = game.score;
+            document.getElementById("score").innerHTML = "Score: " + game.score;
+            document.getElementById("health").innerHTML = "health: " + game.health;
+
             if (game.health < 0) {
                 alert("Game over! You scored " + game.score)
                 window.location.reload();
