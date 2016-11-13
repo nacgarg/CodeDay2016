@@ -338,7 +338,7 @@ var host = function() {
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             /*  -   Draw Castle   -  */
-            ctx.strokeStyle
+            ctx.strokeStyle = "rgb(0,0,0)"
             ctx.fillStyle = "rgb(211,211,211)";
             ctx.fillRect(translate_x - 160, translate_y - 100, 320, 200);
             ctx.fillStyle = "rgb(0,0,0)";
@@ -349,7 +349,6 @@ var host = function() {
             ctx.lineTo(translate_x + 160, translate_y - 100);
             ctx.lineTo(translate_x + 160, translate_y + 100);
             ctx.lineTo(translate_x - 160, translate_y + 100);
-            ctx.lineTo(translate_x + 160, translate_y - 100);
             ctx.moveTo(translate_x - 160, translate_y + 140);
             ctx.strokeStyle = "rgb(0,200,0)"
             //ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
@@ -365,6 +364,7 @@ var host = function() {
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
                 ctx.beginPath();
+                ctx.strokeStyle = "rgb(0,0,0)"
                 ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
                 ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
                 ctx.stroke();
