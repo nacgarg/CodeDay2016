@@ -28,19 +28,21 @@ module.exports = function(http) {
                     return g.code === code.code
                 })[0]
                 g.players.push({ name: code.name, id: code.client })
-                socket.emit("joinGame"+code.code, _.omit(g, "conn"))
+                socket.emit("joinGame" + code.client, _.omit(g, "conn"))
                 g.conn.emit("newPlayer", g.players);
             }
         });
         socket.on("gesture", function(msg) {
-            if (!game.games.filter(function(g) {
+            if (game.games.filter(function(g) {
                     return g.code === msg.code
-                }).length < 1) {
-                return;
+                }).length === 1) {
+
+                console.log('aids')
 
                 var g = game.games.filter(function(g) {
                     return g.code === msg.code
                 })[0]
+              
                 g.conn.emit("newGesture", msg)
             }
         })

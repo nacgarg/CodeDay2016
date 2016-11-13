@@ -33,12 +33,13 @@ var client = function() {
     socket.emit("joinGame", { code: joinCode, name: name, client: clientCode })
     socket.on("joinGame" + clientCode, function(g) {
         console.log(g);
-        window.code = g.code
+        window.slkdfklsdfjcode = joinCode;
     })
 
     function sendGesture(name, percent) {
         if (percent > 0.7) {
-            socket.emit("gesture", { name: name, score: percent, id: clientCode, code: code });
+            console.log('sending gesture');
+            socket.emit("gesture", { name: name, score: percent, id: clientCode, code: slkdfklsdfjcode });
             document.getElementById("gesture").innerHTML = name + " " + Math.round(percent * 100) + "%"
             return true
         } else {
