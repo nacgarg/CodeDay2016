@@ -172,13 +172,14 @@ var host = function() {
     })
 
     socket.on("newPlayer", function(g) {
-        document.getElementById("connected").innerHTML = "Connected: " + g.map(function(e){return e.name}).join(", ");
+        document.getElementById("connected").innerHTML = "Connected: " + g.map(function(e) {
+            return e.name }).join(", ");
     });
 
     socket.on("startGame", function() {
         window.game = {
             health: 100,
-            turrets: 0,
+            turrets: [],
             income: 1, //income per wave
             ink: 20, //how many times you can draw something
             wave: 1,
@@ -186,23 +187,28 @@ var host = function() {
             numofenemies: wave * wave,
             bullets: [{ x: 0, y: 0, target: "enemy id", turret: "turret id" }]
         }
-        var translate_x = canvas.width / 2
-        var translate_y = canvas.height / 2
-
 
     })
 
+    var canvas = document.getElementById('game-canvas');
+    var translate_x = canvas.width / 2
+    var translate_y = canvas.height / 2
+
     socket.on("newGesture", function(gesture) {
         if (gesture.name == "triangle") {
-
+            // new Turret
+            game.turrets.push({
+                id: randomString(5),
+                speed: 3,
+                damage: 3,
+                x: Math.floor(Math.random() * 120) - 120 + translate_x,
+                y: Math.floor(Math.random() * 80) - 80 + translate_y
+            })
         }
     })
 
 
     function draw() {
-        var canvas = document.getElementById('game-canvas');
-        var translate_x = canvas.width / 2
-        var translate_y = canvas.height / 2
         console.log(translate_x, translate_y)
         if (canvas.getContext) {
             var ctx = canvas.getContext('2d');
