@@ -38,7 +38,7 @@ var client = function() {
 
     function sendGesture(name, percent) {
         if (percent > 0.7) {
-            socket.emit("gesture", { name: name, score: percent, id: clientCode, code: code});
+            socket.emit("gesture", { name: name, score: percent, id: clientCode, code: code });
             document.getElementById("gesture").innerHTML = name + " " + Math.round(percent * 100) + "%"
             return true
         } else {
@@ -185,7 +185,7 @@ var host = function() {
 
     socket.on("newGesture", function(gesture) {
         if (gesture.name == "triangle") {
-            
+
         }
     })
 
@@ -199,17 +199,18 @@ var host = function() {
             var ctx = canvas.getContext('2d');
 
             ctx.fillStyle = "rgb(211,211,211)";
-            ctx.fillRect(translate_x - 40, translate_y - 25, 80, 50);
+            ctx.fillRect(translate_x - 160, translate_y - 50, 320, 200);
             ctx.fillStyle = "rgb(0,0,0)";
-            ctx.lineWidth = 0.3;
-            ctx.strokeRect(translate_x - 40, translate_y - 25, 80, 50);
+            ctx.lineWidth = 2;
+            ctx.strokeRect(translate_x - 160, translate_y - 50, 320, 200);
             ctx.beginPath();
-            ctx.moveTo(translate_x - 40, translate_y - 25);
-            ctx.lineTo(translate_x + 40, translate_y - 25);
-            ctx.lineTo(translate_x + 40, translate_y + 25);
-            ctx.lineTo(translate_x - 40, translate_y + 25);
-            ctx.lineTo(translate_x + 40, translate_y - 25);
-            
+            ctx.moveTo(translate_x - 160, translate_y - 100);
+            ctx.lineTo(translate_x + 160, translate_y - 100);
+            ctx.lineTo(translate_x + 160, translate_y + 100);
+            ctx.lineTo(translate_x - 160, translate_y + 100);
+            ctx.lineTo(translate_x + 160, translate_y - 100);
+
+
 
 
 
