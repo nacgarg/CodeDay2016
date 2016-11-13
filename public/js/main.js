@@ -181,7 +181,7 @@ var host = function() {
 
     var enemyTypes = {
         triangle: { health: 3, speed: 5, damage: 0.3 },
-        pentagon: { health: 9, speed: 0.2, damage: 0.5},
+        pentagon: { health: 9, speed: 0.2, damage: 0.5 },
         star: { health: 15, speed: 0.5, damage: 0.1 },
         circle: { health: 1, speed: 7, damage: 0.1 }
     }
@@ -231,37 +231,31 @@ var host = function() {
         if (enemy.health <= 0) {
             return;
         }
-        ctx.fillStyle = "rgb(0,0,0)"
-        ctx.beginPath();
-        ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2, true);
-        ctx.stroke();
-        ctx.moveTo(enemy.x - 15, enemy.y - 10);
-        ctx.strokeStyle = "rgb(0,200,0)";
-        ctx.lineTo(enemy.x - 15 + 2 * enemy.health / enemyTypes[enemy.type].health, enemy.y - 10);
-        ctx.stroke();
-        // if (enemy.type === "triangle") {
-        //     ctx.fillStyle = "rgb(255,255,0)";
-        //     tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
-        //     tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
-        //     leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
-        //     leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
-        //     rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
-        //     rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
 
-        //     ctx.moveTo(tipX, tipY);
-        //     ctx.lineTo(leftX, leftY);
-        //     ctx.lineTo(rightX, rightY);
-        //     ctx.lineTo(tipX, tipY);
-        //     ctx.fill();
 
-        //     ctx.fillStyle = "rgb(0,0,0)";
-        //     ctx.moveTo(tipX, tipY);
-        //     ctx.beginPath();
-        //     ctx.lineTo(leftX, leftY);
-        //     ctx.lineTo(rightX, rightY);
-        //     ctx.lineTo(tipX, tipY);
-        //     ctx.stroke();
+        if (enemy.type === "triangle") {
+            ctx.fillStyle = "rgb(255,255,0)";
+            tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
+            tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
+            leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
+            leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
+            rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
+            rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
 
+            ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
+            ctx.fill();
+
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.moveTo(tipX, tipY);
+            ctx.beginPath();
+            ctx.lineTo(leftX, leftY);
+            ctx.lineTo(rightX, rightY);
+            ctx.lineTo(tipX, tipY);
+            ctx.stroke();
+        }
         // }
         // if (enemy.type === "pentagon") {
         //     ctx.fillStyle = "rgb(255,255,0)";
@@ -311,30 +305,24 @@ var host = function() {
         //     ctx.stroke();
 
         // }
-        // if (enemy.type === "circle") {
-        //     ctx.fillStyle = "rgb(255,255,0)";
-        //     tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
-        //     tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
-        //     leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
-        //     leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
-        //     rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
-        //     rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
+        else if (enemy.type === "circle") {
+            ctx.fillStyle = "rgb(255,255,0)";
+            ctx.beginPath();
+            ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2, true);
+            ctx.fill();
+            ctx.strokeStyle = "rgb(0,0,0)";
+            ctx.stroke();
 
-        //     ctx.moveTo(tipX, tipY);
-        //     ctx.lineTo(leftX, leftY);
-        //     ctx.lineTo(rightX, rightY);
-        //     ctx.lineTo(tipX, tipY);
-        //     ctx.fill();
+        }
+        else {
+        	        ctx.fillStyle = "rgb(0,0,0)"
+        ctx.beginPath();
+        ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2, true);
+        ctx.stroke();
+        ctx.moveTo(enemy.x - 15, enemy.y - 10);
+        ctx.strokeStyle = "rgb(0,200,0)";
 
-        //     ctx.fillStyle = "rgb(0,0,0)";
-        //     ctx.moveTo(tipX, tipY);
-        //     ctx.beginPath();
-        //     ctx.lineTo(leftX, leftY);
-        //     ctx.lineTo(rightX, rightY);
-        //     ctx.lineTo(tipX, tipY);
-        //     ctx.stroke();
-
-        // }
+        }
     }
     var enemyFrequency = 500;
     var numEnemies = 1;
@@ -369,8 +357,8 @@ var host = function() {
             ctx.fillStyle = hsl_col_perc(game.health / 10, 0, 120);
 
             if (game.health >= 1) {
-            ctx.fillRect(translate_x - 160, translate_y - 180, 320 * game.health / 1000, 20);
-        	}
+                ctx.fillRect(translate_x - 160, translate_y - 180, 320 * game.health / 1000, 20);
+            }
 
 
             /* Draw enemies */
@@ -495,7 +483,7 @@ var host = function() {
 
             //var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
 
-            for (var i = 0; i < (numEnemies) ; i++) {
+            for (var i = 0; i < (numEnemies); i++) {
 
                 if (counter % enemyFrequency == 0) {
                     var rand = Math.random();
@@ -503,7 +491,7 @@ var host = function() {
                         enemyFrequency /= 1.5;
                     }
                     if (numEnemies < 70) {
-                    	numEnemies ++
+                        numEnemies++
                     }
                     var enemy = {
                         angle: 0,
@@ -540,9 +528,9 @@ var host = function() {
                     }
                     maxTurretLifetime = (-1500 * Math.atan(counter / 2000)) + (1500 * Math.PI / 2)
 
-                    enemy.health = enemyTypes[enemy.type].health ;
-                    enemy.speed = enemyTypes[enemy.type].speed ;
-                    enemy.size = 15 ;
+                    enemy.health = enemyTypes[enemy.type].health;
+                    enemy.speed = enemyTypes[enemy.type].speed;
+                    enemy.size = 15;
                     game.enemies.push(enemy);
                     console.log('made enemy', enemy);
                 }
