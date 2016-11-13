@@ -179,83 +179,125 @@ var host = function() {
         }).join(", ");
     });
 
-    window.game = {
-        health: 100,
-        turrets: [],
-        income: 1, //income per wave
-        ink: 20, //how many times you can draw something
-        wave: 1,
-        enemies: [{ health: 3, type: "triangle", speed: 5, damage: 3, id: "unique id" }, { health: 9, type: "pentagon", speed: 2, damage: 5 }, { health: 15, type: "star", speed: 0.5, damage: 10 }, { health: 1, type: "circle", speed: 7, damage: 1 }],
-        // numofenemies: wave * wave,
-        bullets: [{ x: 0, y: 0, target: "enemy id", turret: "turret id" }]
+    var enemyTypes = {
+        triangle: { health: 3, speed: 5, damage: 3 },
+        pentagon: { health: 9, speed: 2 },
+        star: { health: 15, speed: 0.5, damage: 10 },
+        circle: { health: 1, speed: 7, damage: 1 }]
+}
+
+window.game = {
+    health: 100,
+    turrets: [],
+    income: 1, //income per wave
+    ink: 20, //how many times you can draw something
+    wave: 1,
+    enemies: [{ x, y, type, health, target }],
+    // numofenemies: wave * wave,
+    bullets: [{ x: 0, y: 0, target: "enemy id", turret: "turret id" }]
+}
+
+var canvas = document.getElementById('game-canvas');
+var translate_x = canvas.width / 2
+var translate_y = canvas.height / 2
+
+socket.on("newGesture", function(gesture) {
+    if (gesture.name == "triangle") {
+        // new Turret
+        game.turrets.push({
+            id: randomString(5),
+            speed: 3,
+            damage: 3,
+            x: Math.floor(Math.random() * 320) - 160 + translate_x,
+            y: Math.floor(Math.random() * 200) - 100 + translate_y
+        })
     }
-
-    var canvas = document.getElementById('game-canvas');
-    var translate_x = canvas.width / 2
-    var translate_y = canvas.height / 2
-
-    socket.on("newGesture", function(gesture) {
-        if (gesture.name == "triangle") {
-            // new Turret
-            game.turrets.push({
-                id: randomString(5),
-                speed: 3,
-                damage: 3,
-                x: Math.floor(Math.random() * 320) - 160 + translate_x,
-                y: Math.floor(Math.random() * 200) - 100 + translate_y
-            })
-        }
-    })
+})
 
 
-    function draw() {
-        console.log(translate_x, translate_y)
-        if (canvas.getContext) {
-            var ctx = canvas.getContext('2d');
+function draw(t) {
+    console.log(translate_x, translate_y)
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
 
 
-            /*  -   Draw Castle   -  */
-            ctx.fillStyle = "rgb(211,211,211)";
-            ctx.fillRect(translate_x - 160, translate_y - 50, 320, 200);
-            ctx.fillStyle = "rgb(0,0,0)";
-            ctx.lineWidth = 2;
-            ctx.strokeRect(translate_x - 160, translate_y - 50, 320, 200);
+        /*  -   Draw Castle   -  */
+        ctx.fillStyle = "rgb(211,211,211)";
+        ctx.fillRect(translate_x - 160, translate_y - 50, 320, 200);
+        ctx.fillStyle = "rgb(0,0,0)";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(translate_x - 160, translate_y - 50, 320, 200);
+        ctx.beginPath();
+        ctx.moveTo(translate_x - 160, translate_y - 100);
+        ctx.lineTo(translate_x + 160, translate_y - 100);
+        ctx.lineTo(translate_x + 160, translate_y + 100);
+        ctx.lineTo(translate_x - 160, translate_y + 100);
+        ctx.lineTo(translate_x + 160, translate_y - 100);
+
+        /* Draw enemies */
+        // for enemy in enemies, drawEnemy(enemy)
+
+        // for (var i = game.enemies.length - 1; i >= 0; i--) {
+        //     game.enemies[i]
+        // }
+
+        //draw turrets
+        for (var i = game.turrets.length - 1; i >= 0; i--) {
             ctx.beginPath();
-            ctx.moveTo(translate_x - 160, translate_y - 100);
-            ctx.lineTo(translate_x + 160, translate_y - 100);
-            ctx.lineTo(translate_x + 160, translate_y + 100);
-            ctx.lineTo(translate_x - 160, translate_y + 100);
-            ctx.lineTo(translate_x + 160, translate_y - 100);
-
-            /* Draw enemies */
-            // for enemy in enemies, drawEnemy(enemy)
-
-            // for (var i = game.enemies.length - 1; i >= 0; i--) {
-            //     game.enemies[i]
-            // }
-
-            //draw turrets
-            for (var i = game.turrets.length - 1; i >= 0; i--) {
-                ctx.beginPath();
-                ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
-                ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
-                ctx.stroke();
-            }
-
-            /* Shoot guns (calculate positions) */
-
-            /* Animate bullets */
-            // for bullet in bullets, figure angle toward enemy (arctan), then move bullet.turret.speed
-
-            /* Spawn enemies */
-
+            ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
+            ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
+            ctx.stroke();
         }
-        window.requestAnimationFrame(draw)
 
+        /* Shoot guns (calculate positions) */
 
+        /* Animate bullets */
+        // for bullet in bullets, figure angle toward enemy (arctan), then move bullet.turret.speed
 
-
-        //game.enemies[0].health
+        /* Spawn enemies */
+        if (t % 500 == 0) {
+            var rand = Math.random();
+            var enemy = {}
+            var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
+            switch (edge) {
+                case "up":
+                    enemy.x = Math.random() * translate_x * 2
+                    enemy.y = Math.random() * 10
+                case "down":
+                    enemy.x = Math.random() * translate_x * 2
+                    enemy.y = translate_y * 2 - Math.random() * 10
+                case "left":
+                    enemy.y = Math.random() * translate_y * 2
+                    enemy.x = Math.random() * 10
+                case "right":
+                    enemy.y = Math.random() * translate_y * 2
+                    enemy.x = translate_x * 2 - Math.random() * 10
+            }
+            if (rand > 0.9) {
+                enemy.type = "star"
+                enemy.health = enemyTypes.star.health
+                enemy.target = [translate_x, translate_y]
+            } else if (rand > 0.65) {
+                enemy.type = "pentagon"
+                enemy.health = enemyTypes.pentagon.health
+                enemy.target = [translate_x, translate_y]
+            } else if (random > 0.4) {
+                enemy.type = "circle"
+                enemy.health = enemyTypes.circle.health
+                enemy.target = [translate_x, translate_y]
+            } else {
+                enemy.type = "triangle"
+                enemy.health = enemyTypes.triangle.health
+                enemy.target = [translate_x, translate_y]
+            }
+        }
     }
-    draw()
+    window.requestAnimationFrame(draw)
+
+
+
+
+    //game.enemies[0].health
+}
+draw()
 }
