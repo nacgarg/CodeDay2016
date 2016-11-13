@@ -215,8 +215,101 @@ var host = function() {
         }
     })
 
-    function drawTriangle(x, y, hp) {
+    function drawEnemy(enemy) {
+        if (enemy.type === "triangle") {
+            ctx.fillStyle = "rgb(255,255,0)";
+            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
+            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
+            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
+            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
+            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
+            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
 
+			ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.fill();
+
+            ctx.fillStyle = "rgb(0,0,0)";
+			ctx.moveTo(tipX, tipY);
+			ctx.beginPath();
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.stroke();
+
+        }
+        if (enemy.type === "pentagon") {
+            ctx.fillStyle = "rgb(255,255,0)";
+            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
+            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
+            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
+            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
+            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
+            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
+
+			ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.fill();
+
+            ctx.fillStyle = "rgb(0,0,0)";
+			ctx.moveTo(tipX, tipY);
+			ctx.beginPath();
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.stroke();
+
+        }if (enemy.type === "star") {
+            ctx.fillStyle = "rgb(255,255,0)";
+            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
+            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
+            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
+            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
+            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
+            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
+
+			ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.fill();
+
+            ctx.fillStyle = "rgb(0,0,0)";
+			ctx.moveTo(tipX, tipY);
+			ctx.beginPath();
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.stroke();
+
+        }if (enemy.type === "circle") {
+            ctx.fillStyle = "rgb(255,255,0)";
+            tipX = enemy.x + ((enemy.x + 10) - enemy.x) Math.cos(enemy.angle) - ((enemy.y) - enemy.y) Math.sin(enemy.angle);
+            tipY = enemy.y + ((enemy.x + 10) - enemy.x) Math.sin(enemy.angle) + ((enemy.y) - enemy.y) Math.cos(enemy.angle);
+            leftX = enemy.x + ((enemy.x - 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y + 5) - enemy.y) Math.sin(enemy.angle);
+            leftY = enemy.y + ((enemy.x - 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y + 5) - enemy.y) Math.cos(enemy.angle);
+            rightX = enemy.x + ((enemy.x + 5) - enemy.x) Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) Math.sin(enemy.angle);
+            rightY = enemy.y + ((enemy.x + 5) - enemy.x) Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) Math.cos(enemy.angle);
+
+			ctx.moveTo(tipX, tipY);
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.fill();
+
+            ctx.fillStyle = "rgb(0,0,0)";
+			ctx.moveTo(tipX, tipY);
+			ctx.beginPath();
+            ctx.lineTo(leftX,leftY);
+            ctx.lineTo(rightX,rightY);
+            ctx.lineTo(tipX,tipY);
+            ctx.stroke();
+
+        }
     }
 
     function draw(t) {
@@ -241,9 +334,9 @@ var host = function() {
             /* Draw enemies */
             // for enemy in enemies, drawEnemy(enemy)
 
-            // for (var i = game.enemies.length - 1; i >= 0; i--) {
-            //     game.enemies[i]
-            // }
+            for (var i = game.enemies.length - 1; i >= 0; i--) {
+                drawEnemy(game.enemies[i])
+            }
 
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
@@ -320,6 +413,7 @@ var host = function() {
             }
 
             /* Spawn enemies */
+
             if (t % 500 == 0) {
                 var rand = Math.random();
                 var enemy = {
@@ -356,6 +450,7 @@ var host = function() {
                 }
                 game.enemies.push(enemy);
             }
+
         }
         window.requestAnimationFrame(draw)
     }
