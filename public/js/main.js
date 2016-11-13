@@ -207,6 +207,7 @@ var host = function() {
             // new Turret
             game.turrets.push({
                 id: randomString(5),
+                lifetime: 0,
                 speed: 3,
                 damage: 3,
                 x: Math.floor(Math.random() * 320) - 160 + translate_x,
@@ -333,6 +334,8 @@ var host = function() {
     var enemyFrequency = 500;
     var numEnemies = 1;
 
+    var maxTurretLifetime = 1500
+
     function draw(t) {
         if (canvas.getContext) {
             window.ctx = canvas.getContext('2d');
@@ -363,8 +366,19 @@ var host = function() {
                 drawEnemy(game.enemies[i])
             }
 
+            // Delete enemies with health < 0
+
+            game.enemies = game.enemies.filter(function(e) {
+                return e.health > 0
+            })
+
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
+                if (game.turrets[i].lifetime >= maxTurretLifetime) {
+                    // kill turret
+                    game.turrets[i].splice(i, 1);
+                    continue;
+                }
                 console.log("rednering turret")
                 ctx.beginPath();
                 ctx.strokeStyle = "rgb(0,0,0)"
@@ -506,9 +520,12 @@ var host = function() {
                     } else {
                         enemy.type = "triangle"
                     }
-                    enemy.health = enemyTypes[enemy.type].health * (Math.ceil(counter/1000) + 1)/2;
-                    enemy.speed = enemyTypes[enemy.type].speed * (Math.ceil(counter/1000) + 1)/2;
-                    enemy.size = 15 * (Math.ceil(counter/1000) + 1)/2;
+                    var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
+                    maxTurretLifetime = (-1500 * Math.atan(x / 2000)) + (1500 * Math.PI / 2)
+
+                    enemy.health = enemyTypes[enemy.type].health * scaleFactor;
+                    enemy.speed = enemyTypes[enemy.type].speed * scaleFactor;
+                    enemy.size = 15 * scaleFactor;
                     game.enemies.push(enemy);
                     console.log('made enemy', enemy);
                 }
