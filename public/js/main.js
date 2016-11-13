@@ -216,6 +216,7 @@ var host = function() {
     })
 
     function drawEnemy(enemy) {
+
         if (enemy.type === "triangle") {
             ctx.fillStyle = "rgb(255,255,0)";
             tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
@@ -317,7 +318,7 @@ var host = function() {
     function draw(t) {
         console.log(translate_x, translate_y)
         if (canvas.getContext) {
-            var ctx = canvas.getContext('2d');
+            window.ctx = canvas.getContext('2d');
 
 
             /*  -   Draw Castle   -  */
