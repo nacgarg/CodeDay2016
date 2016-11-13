@@ -192,9 +192,8 @@ var host = function() {
         income: 1, //income per wave
         ink: 20, //how many times you can draw something
         wave: 1,
-        enemies: [{ x, y, type, health, target }],
+        enemies: [],
         // numofenemies: wave * wave,
-        bullets: [{ x: 0, y: 0, target: "enemy id", turret: "turret id" }]
     }
 
     var canvas = document.getElementById('game-canvas');
@@ -209,7 +208,9 @@ var host = function() {
                 speed: 3,
                 damage: 3,
                 x: Math.floor(Math.random() * 320) - 160 + translate_x,
-                y: Math.floor(Math.random() * 200) - 120 + translate_y
+                y: Math.floor(Math.random() * 200) - 120 + translate_y,
+                ready: true // if the turret is ready to shoot, false if it is currently shooting
+                bullet: { x: 0, y: 0, target: null }
             })
         }
     })
@@ -250,30 +251,77 @@ var host = function() {
                 ctx.moveTo(game.turrets[i].x, game.turrets[i].y);
                 ctx.arc(game.turrets[i].x, game.turrets[i].y, 10, 0, Math.PI * 2, true);
                 ctx.stroke();
+                // if !turret.ready draw bullet
             }
 
             /* Shoot guns (calculate positions) */
 
-            /* Animate bullets */
-            // for bullet in bullets, figure angle toward enemy (arctan), then move bullet.turret.speed
+            for (var i = game.turrets.length - 1; i >= 0; i--) {
+                var turret = game.turrets[i];
+                if (turret.ready) { // if it is ready to shoot
+                    // see which enemy is closest
+                    var closestDist = 9999;
+                    var closest;
+                    if (game.enemies.length === 0) { //nothing to shoot
+                        continue;
+                    }
+                    for (var i = game.enemies.length - 1; i >= 0; i--) {
+                        var dist = Math.sqrt(Math.pow(turret.x - game.enemies[i].x, 2) + Math.pow(turret.y - game.enemies[i].y, 2));
+                        if (dist < closest) {
+                            closestDist = dist;
+                            closest = game.enemies[i]
+                        }
+                    }
+                    // set it as the target
+                    turret.bullet.target = enemy;
+                    // fire 
+                    turret.ready = false;
+                    turret.bullet.x = turret.x;
+                    turret.bullet.y = turret.y;
+                    var angle = Math.atan2(turret.bullet.target.y - turret.y, turret.bullet.target.x - turret.x);
+                    turret.angle = angle;
+                } else { // just animate the bullet
+                    var bullet = turret.bullet
+                    var target = bullet.target;
+                    if (target.health === 0) { // if the target is dead somehow
+                        // make the bullet disappear
+                        turret.ready = true;
+                    }
+                    var angle = Math.atan2(bullet.y - target.y, bullet.x - target.x);
+                    var angleDelta = angle - turret.angle;
+                    if (angleDelta <= -Math.PI / 10) {
+                        angleDelta = -Math.PI / 10
+                    } else if (angleDelta >= Math.PI / 10) {
+                        angleDelta = Math.PI / 10
+                    }
+                    turret.angle = Math.atan2(turret.bullet.target.y - turret.y, turret.bullet.target.x - turret.x);;
+                    angle = angle + angleDelta;
+                    var xSpeed = turret.speed * Math.cos(angle);
+                    var ySpeed = turret.speed * Math.sin(angle);
+                    bullet.x += xSpeed;
+                    bullet.y += ySpeed;
+                }
+            }
 
-            /* Move enemies */ 
+            /* Move enemies */
 
             for (var i = game.enemies.length - 1; i >= 0; i--) {
                 var enemy = game.enemies[i];
                 var target = enemy.target;
-                var angle = Math.atan2(target[1], target[0])
+                var angle = Math.atan2(enemy.y - target.y, enemy.x - target.x)
                 var xSpeed = enemy.speed * Math.cos(angle);
                 var ySpeed = enemy.speed * Math.sin(angle);
                 enemy.x += xSpeed;
                 enemy.y += ySpeed;
+                // rotate enemies
             }
 
             /* Spawn enemies */
             if (t % 500 == 0) {
                 var rand = Math.random();
                 var enemy = {
-                    angle: 0
+                    angle: 0,
+                    target: { x: translate_x, y: translate_y }
                 }
                 var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
                 switch (edge) {
@@ -293,19 +341,15 @@ var host = function() {
                 if (rand > 0.9) {
                     enemy.type = "star"
                     enemy.health = enemyTypes.star.health
-                    enemy.target = [translate_x, translate_y]
                 } else if (rand > 0.65) {
                     enemy.type = "pentagon"
                     enemy.health = enemyTypes.pentagon.health
-                    enemy.target = [translate_x, translate_y]
                 } else if (random > 0.4) {
                     enemy.type = "circle"
                     enemy.health = enemyTypes.circle.health
-                    enemy.target = [translate_x, translate_y]
                 } else {
                     enemy.type = "triangle"
                     enemy.health = enemyTypes.triangle.health
-                    enemy.target = [translate_x, translate_y]
                 }
                 game.enemies.push(enemy);
             }
