@@ -443,7 +443,7 @@ var host = function() {
                 } else if (rand > 0.65) {
                     enemy.type = "pentagon"
                     enemy.health = enemyTypes.pentagon.health
-                } else if (random > 0.4) {
+                } else if (rand > 0.4) {
                     enemy.type = "circle"
                     enemy.health = enemyTypes.circle.health
                 } else {
