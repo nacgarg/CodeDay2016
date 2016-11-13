@@ -202,7 +202,7 @@ var host = function() {
                 speed: 3,
                 damage: 3,
                 x: Math.floor(Math.random() * 320) - 160 + translate_x,
-                y: Math.floor(Math.random() * 160) - 80 + translate_y
+                y: Math.floor(Math.random() * 200) - 100 + translate_y
             })
         }
     })
