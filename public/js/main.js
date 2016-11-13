@@ -32,6 +32,7 @@ var client = function() {
     var name = prompt("whats ur name") || "guest"
     socket.emit("joinGame", { code: joinCode, name: name, client: clientCode })
     socket.on("joinGame" + clientCode, function(g) {
+        console.log(g);
         window.slkdfklsdfjcode = joinCode;
     })
 
@@ -234,12 +235,12 @@ var host = function() {
 
         if (enemy.type === "triangle") {
             ctx.fillStyle = "rgb(255,255,0)";
-            tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
-            tipY = enemy.y + 10 * Math.sin(enemy.angle) + ((enemy.y) - enemy.y) * Math.cos(enemy.angle);
-            leftX = enemy.x + -5 * Math.cos(enemy.angle) - 5 * Math.sin(enemy.angle);
-            leftY = enemy.y + -5 * Math.sin(enemy.angle) + 5 * Math.cos(enemy.angle);
-            rightX = enemy.x + 5 * Math.cos(enemy.angle) - ((enemy.y - 5) - enemy.y) * Math.sin(enemy.angle);
-            rightY = enemy.y + 5 * Math.sin(enemy.angle) + ((enemy.y - 5) - enemy.y) * Math.cos(enemy.angle);
+            tipX = enemy.x;
+            tipY = enemy.y - (5 * Math.sqrt(3));
+            leftX = enemy.x - 5;
+            leftY = enemy.y + (5 * Math.sqrt(3));
+            rightX = enemy.x + 5;
+            rightY = enemy.y + (5 * Math.sqrt(3));
 
             ctx.moveTo(tipX, tipY);
             ctx.lineTo(leftX, leftY);
@@ -248,8 +249,9 @@ var host = function() {
             ctx.fill();
 
             ctx.fillStyle = "rgb(0,0,0)";
-            ctx.moveTo(tipX, tipY);
+
             ctx.beginPath();
+            ctx.moveTo(tipX, tipY);
             ctx.lineTo(leftX, leftY);
             ctx.lineTo(rightX, rightY);
             ctx.lineTo(tipX, tipY);
@@ -325,7 +327,7 @@ var host = function() {
     var enemyFrequency = 500;
     var numEnemies = 1;
 
-    var maxTurretLifetime = 2000
+    var maxTurretLifetime = 1500
 
     function draw(t) {
         if (canvas.getContext) {
@@ -374,9 +376,9 @@ var host = function() {
 
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
-                if (++game.turrets[i].lifetime >= maxTurretLifetime) {
+                if (game.turrets[i].lifetime >= maxTurretLifetime) {
                     // kill turret
-                    game.turrets.splice(i, 1);
+                    game.turrets[i].splice(i, 1);
                     continue;
                 }
                 ctx.beginPath();
@@ -410,6 +412,7 @@ var host = function() {
                         if (dist < closestDist && game.enemies[i].health > 0) {
                             closestDist = dist;
                             closest = game.enemies[i]
+                            console.log('found closer enemy: ', closest);
                         }
                     }
                     // set it as the target
@@ -420,6 +423,7 @@ var host = function() {
                     turret.bullet.y = turret.y;
                     var angle = Math.atan2(turret.bullet.target.y - turret.y, turret.bullet.target.x - turret.x);
                     turret.angle = angle;
+                    console.log('fired bullet')
                 } else { // just animate the bullet
                     var bullet = turret.bullet
                     var target = bullet.target;
@@ -476,19 +480,25 @@ var host = function() {
 
             /* Spawn enemies */
             counter++;
-            numEnemies = Math.floor(0.000003*Math.pow(counter, 1.8)) + 1
+
             //var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
-            if (counter % enemyFrequency == 0) {
-                for (var i = 0; i < (numEnemies); i++) {
+
+            for (var i = 0; i < (numEnemies); i++) {
+
+                if (counter % enemyFrequency == 0) {
                     var rand = Math.random();
-                    if (enemyFrequency > 100 && counter % 1500 && numEnemies < 70) {
-                        enemyFrequency /= 2;
+                    if (enemyFrequency > 100) {
+                        enemyFrequency /= 1.5;
+                    }
+                    if (numEnemies < 70) {
+                        numEnemies++
                     }
                     var enemy = {
                         angle: 0,
                         target: { x: translate_x, y: translate_y }
                     }
                     var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
+                    console.log("spawning from " + edge)
 
                     if (edge === "up") {
                         enemy.x = Math.random() * translate_x * 2
@@ -518,16 +528,17 @@ var host = function() {
                     }
                     maxTurretLifetime = (-1500 * Math.atan(counter / 2000)) + (1500 * Math.PI / 2)
 
-                    enemy.health = enemyTypes[enemy.type].health * Math.random() * Math.sqrt(counter) / 30 + 1;
-                    enemy.speed = enemyTypes[enemy.type].speed * Math.random() * Math.sqrt(counter) / 30 + 1;
-                    enemy.size = 15 * Math.random() * Math.sqrt(counter) / 30 + 1;
+                    enemy.health = enemyTypes[enemy.type].health;
+                    enemy.speed = enemyTypes[enemy.type].speed;
+                    enemy.size = 15;
                     game.enemies.push(enemy);
+                    console.log('made enemy', enemy);
                 }
             }
             // Check if you are rip
 
             document.getElementById("score").innerHTML = "Score: " + game.score;
-            document.getElementById("health").innerHTML = "Health: " + Math.round(game.health);
+            document.getElementById("health").innerHTML = "health: " + game.health;
 
             if (game.health < 0) {
                 alert("Game over! You scored " + game.score)
