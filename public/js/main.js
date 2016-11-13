@@ -493,10 +493,10 @@ var host = function() {
 
             /* Spawn enemies */
             counter++;
-            
+
             var scaleFactor = (Math.ceil(counter / 1000) + 1) / 2;
 
-            for (var i = 0; i < numEnemies * scaleFactor; i++) {
+            for (var i = 0; i < (numEnemies + 2) * scaleFactor; i++) {
 
                 if (counter % enemyFrequency == 0) {
                     var rand = Math.random();
