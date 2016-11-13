@@ -216,6 +216,9 @@ var host = function() {
     })
 
     function drawEnemy(enemy) {
+        if (enemy.health <= 0) {
+            return;
+        }
     	ctx.fillStyle = "rgb(0,0,0)"
     	ctx.beginPath();
     	ctx.arc(enemy.x, enemy.y, 30, 0, Math.PI * 2, true);
@@ -405,6 +408,13 @@ var host = function() {
                     var ySpeed = turret.speed * Math.sin(angle);
                     bullet.x -= xSpeed;
                     bullet.y -= ySpeed;
+
+                    // check if bullet hit enemy, if so, decrease enemy health and reset bullet
+
+                    if (Math.sqrt(Math.pow(turret.x - target.x, 2) + Math.pow(turret.y - target.y, 2)) < 15) { //within 15 of enemy, so it probably hit it lol
+                        target.health -= turret.damage;
+                        turret.ready = true;
+                    }
                 }
             }
 
