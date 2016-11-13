@@ -187,13 +187,14 @@ var host = function() {
     }
 
     window.game = {
-        health: 100,
+        health: 500,
         turrets: [],
         income: 1, //income per wave
         ink: 20, //how many times you can draw something
         wave: 1,
         enemies: [],
-        // numofenemies: wave * wave,
+        score: 0
+            // numofenemies: wave * wave,
     }
 
     var canvas = document.getElementById('game-canvas');
@@ -212,6 +213,10 @@ var host = function() {
                 ready: true, // if the turret is ready to shoot, false if it is currently shooting
                 bullet: { x: 0, y: 0, target: null }
             })
+        }
+        if (gesture.name == "rectangle") {
+            // new Brick (moar health)
+            game.health += 60
         }
     })
 
@@ -419,6 +424,9 @@ var host = function() {
                     if (Math.sqrt(Math.pow(bullet.x - target.x, 2) + Math.pow(bullet.y - target.y, 2)) < 15) { //within 15 of enemy, so it probably hit it lol
                         target.health -= turret.damage;
                         turret.ready = true;
+                        if (target.health < 0) { //ded
+                            score += 1
+                        }
                     }
                 }
             }
@@ -435,7 +443,14 @@ var host = function() {
                 enemy.x -= xSpeed;
                 enemy.y -= ySpeed;
                 // rotate enemies
+
+                // check if enemy is in castle, if so decrease health by its damage
+                if (enemy.x > translate_x - 160 && enemy.x < translate_x + 160 && enemy.y > translate_y - 100 && enemy.y < translate_y + 1000) {
+                    game.health -= enemy.damage
+                        // maybe enemy health goes down if it's in the castle?
+                }
             }
+
 
             /* Spawn enemies */
 
@@ -478,6 +493,14 @@ var host = function() {
                     game.enemies.push(enemy);
                     console.log('made enemy', enemy);
                 }
+            }
+
+            // Check if you are rip
+
+            document.getElementById("score").innerHTML = game.score;
+            if (game.health < 0) {
+                alert("Game over! You scored " + game.score)
+                window.location.reload();
             }
 
         }
