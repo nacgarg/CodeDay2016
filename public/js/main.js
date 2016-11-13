@@ -350,10 +350,10 @@ var host = function() {
             ctx.lineTo(translate_x + 160, translate_y + 100);
             ctx.lineTo(translate_x - 160, translate_y + 100);
             ctx.moveTo(translate_x - 160, translate_y + 140);
-                //ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
+            //ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
             ctx.fillStyle = "rgb(0,200,0)"
-            ctx.fillRect(translate_x-160, translate_y - 180, 320*game.health/1000, 40);
-            
+            ctx.fillRect(translate_x - 160, translate_y - 180, 320 * game.health / 1000, 40);
+
 
             /* Draw enemies */
             // for enemy in enemies, drawEnemy(enemy)
@@ -477,48 +477,52 @@ var host = function() {
                     }
                     var edge = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
                     console.log("spawning from " + edge)
-                    switch (edge) {
-                        case "up":
-                            enemy.x = Math.random() * translate_x * 2
-                            enemy.y = Math.random() * 10
-                        case "down":
-                            enemy.x = Math.random() * translate_x * 2
-                            enemy.y = translate_y * 2 - Math.random() * 10
-                        case "left":
-                            enemy.y = Math.random() * translate_y * 2
-                            enemy.x = Math.random() * 10
-                        case "right":
-                            enemy.y = Math.random() * translate_y * 2
-                            enemy.x = translate_x * 2 - Math.random() * 10
+
+                    if (edge === "up") {
+                        enemy.x = Math.random() * translate_x * 2
+                        enemy.y = Math.random() * 10
                     }
-                    if (rand > 0.9) {
-                        enemy.type = "star"
-                    } else if (rand > 0.65) {
-                        enemy.type = "pentagon"
-                    } else if (rand > 0.4) {
-                        enemy.type = "circle"
-                    } else {
-                        enemy.type = "triangle"
+                    if (edge === "down") {
+                        enemy.x = Math.random() * translate_x * 2
+                        enemy.y = translate_y * 2 - Math.random() * 10
                     }
-                    enemy.health = enemyTypes[enemy.type].health;
-                    enemy.speed = enemyTypes[enemy.type].speed;
-                    game.enemies.push(enemy);
-                    console.log('made enemy', enemy);
+                    if (edge === "left") {
+                        enemy.y = Math.random() * translate_y * 2
+                        enemy.x = Math.random() * 10
+                    }
+                    if (edge === "right") {
+                        enemy.y = Math.random() * translate_y * 2
+                        enemy.x = translate_x * 2 - Math.random() * 10
+                    }
                 }
+                if (rand > 0.9) {
+                    enemy.type = "star"
+                } else if (rand > 0.65) {
+                    enemy.type = "pentagon"
+                } else if (rand > 0.4) {
+                    enemy.type = "circle"
+                } else {
+                    enemy.type = "triangle"
+                }
+                enemy.health = enemyTypes[enemy.type].health;
+                enemy.speed = enemyTypes[enemy.type].speed;
+                game.enemies.push(enemy);
+                console.log('made enemy', enemy);
             }
-            // Check if you are rip
-
-            document.getElementById("score").innerHTML = "Score: " + game.score;
-            document.getElementById("health").innerHTML = "health: " + game.health;
-
-            if (game.health < 0) {
-                alert("Game over! You scored " + game.score)
-                window.location.reload();
-            }
-
         }
-        window.requestAnimationFrame(draw)
+        // Check if you are rip
+
+        document.getElementById("score").innerHTML = "Score: " + game.score;
+        document.getElementById("health").innerHTML = "health: " + game.health;
+
+        if (game.health < 0) {
+            alert("Game over! You scored " + game.score)
+            window.location.reload();
+        }
+
     }
-    window.counter = 0;
-    draw();
+    window.requestAnimationFrame(draw)
+}
+window.counter = 0;
+draw();
 }
