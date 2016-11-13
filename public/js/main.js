@@ -163,4 +163,56 @@ var host = function() {
         window.game = msg;
         alert("code is " + game.code)
     })
+
+    socket.on("startGame", function() {
+        window.game = {
+            health: 100,
+            turrets: 0,
+            income: 1, //income per wave
+            ink: 20, //how many times you can draw something
+            wave: 1,
+            enemies: [{ health: 3, type: "triangle", speed: 5, damage: 3 }, { health: 9, type: "pentagon", speed: 2, damage: 5 }, { health: 15, type: "star", speed: 0.5, damage: 10 }, { health: 1, type: "circle", speed: 7, damage: 1 }],
+            numofenemies: wave * wave,
+        }
+        var translate_x = canvas.width / 2
+        var translate_y = canvas.height / 2
+
+
+    })
+
+
+    function draw() {
+        var canvas = document.getElementById('game-canvas');
+        var translate_x = canvas.width / 2
+        var translate_y = canvas.height / 2
+        if (canvas.getContext) {
+            var ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = "rgb(211,211,211)";
+            ctx.fillRect(translate_x - 40, translate_y - 25, 80, 50);
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.lineWidth = 0.3;
+            ctx.strokeRect(translate_x - 40, translate_y - 25, 80, 50);
+            ctx.beginPath();
+            ctx.moveTo(translate_x - 40, translate_y - 25);
+            ctx.lineTo(translate_x + 40, translate_y - 25);
+            ctx.lineTo(translate_x + 40, translate_y + 25);
+            ctx.lineTo(translate_x - 40, translate_y + 25);
+            ctx.lineTo(translate_x + 40, translate_y - 25);
+            
+
+
+
+
+
+
+        }
+        window.requestAnimationFrame(draw)
+
+
+
+
+        //game.enemies[0].health
+    }
+    draw()
 }
