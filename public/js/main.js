@@ -365,14 +365,14 @@ var host = function() {
                     }
                     for (var i = game.enemies.length - 1; i >= 0; i--) {
                         var dist = Math.sqrt(Math.pow(turret.x - game.enemies[i].x, 2) + Math.pow(turret.y - game.enemies[i].y, 2));
-                        if (dist < closest) {
+                        if (dist < closestDist) {
                             closestDist = dist;
                             closest = game.enemies[i]
                             console.log('found closer enemy: ', closest);
                         }
                     }
                     // set it as the target
-                    turret.bullet.target = closest;
+                    turret.bullet.target = closest || game.enemies[0];
                     // fire 
                     turret.ready = false;
                     turret.bullet.x = turret.x;
