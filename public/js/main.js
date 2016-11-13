@@ -334,9 +334,9 @@ var host = function() {
             /* Draw enemies */
             // for enemy in enemies, drawEnemy(enemy)
 
-            // for (var i = game.enemies.length - 1; i >= 0; i--) {
-            //     game.enemies[i]
-            // }
+            for (var i = game.enemies.length - 1; i >= 0; i--) {
+                drawEnemy(game.enemies[i])
+            }
 
             //draw turrets
             for (var i = game.turrets.length - 1; i >= 0; i--) {
