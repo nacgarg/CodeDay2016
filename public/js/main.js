@@ -229,8 +229,9 @@ var host = function() {
         ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2, true);
         ctx.stroke();
         ctx.moveTo(enemy.x - 15, enemy.y - 10);
-        ctx.fillStyle = "rgb(0,200,0)";
+        ctx.strokeStyle = "rgb(0,200,0)";
         ctx.lineTo(enemy.x - 15 + 2*enemy.health/enemyTypes[enemy.type].health, enemy.y-10);
+        ctx.stroke();
         // if (enemy.type === "triangle") {
         //     ctx.fillStyle = "rgb(255,255,0)";
         //     tipX = enemy.x + 10 * Math.cos(enemy.angle) - ((enemy.y) - enemy.y) * Math.sin(enemy.angle);
@@ -348,6 +349,10 @@ var host = function() {
             ctx.lineTo(translate_x + 160, translate_y + 100);
             ctx.lineTo(translate_x - 160, translate_y + 100);
             ctx.lineTo(translate_x + 160, translate_y - 100);
+            ctx.moveTo(translate_x - 160, translate_y + 140);
+            ctx.strokeStyle = "rgb(0,200,0)"
+            ctx.lineTo(translate_x-160 + 320*game.health/1000, translate_y + 140);
+            ctx.stroke();
 
             /* Draw enemies */
             // for enemy in enemies, drawEnemy(enemy)
